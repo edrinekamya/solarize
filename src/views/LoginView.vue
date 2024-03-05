@@ -109,6 +109,7 @@ watchEffect(() => {
   width: 100%;
   font-size: 20px;
   font-weight: bold;
+  height: 40px;
   margin-bottom: 4px;
 }
 

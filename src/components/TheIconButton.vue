@@ -10,7 +10,7 @@ const emit = defineEmits(['press']);
 </script>
 
 <template>
-  <button @click.stop="emit('press')" type="button">
+  <button class="center" @click.stop="emit('press')" type="button">
     <v-icon :name="camelToKebab(name)" />
   </button>
 </template>
@@ -23,6 +23,7 @@ button {
   border-radius: 2px;
   background: transparent;
   cursor: pointer;
+  height: 24px;
 }
 
 button:hover {

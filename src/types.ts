@@ -17,9 +17,11 @@ interface UserSession {
   endTime: Date | null
   progress: number
   customer: string
-  status: 'Active' | 'Complete' | 'Pending' 
+  status: SessionStatus
   // Other session-related data
 }
+
+type SessionStatus = 'Active' | 'Complete' | 'Scheduled' 
 
 // Interface for individual slide content
 interface SlideContent {

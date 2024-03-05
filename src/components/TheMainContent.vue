@@ -1,24 +1,30 @@
 <script setup lang="ts">
+import TheFilterButton from "@/components/TheFilterButton.vue";
 import TheIcon from "@/components/TheIcon.vue";
+import { useMainStore } from "@/stores/main";
+
+const store = useMainStore()
+
 </script>
 
 <template>
   <section class="flex column bd-left main-content">
-    <header class="end row bd-bottom">
+    <section>
+    </section>
+    <header class="spaced row bd-bottom">
+      <section class="row gap">
+        <TheFilterButton v-for="status in store.statusFilters" :key="status" :status='status' />
+      </section>
       <button class="center" type="button">
         <TheIcon name="BiPlus" />
         Session
       </button>
     </header>
-    <section class="bd-bottom row">
-
-    </section>
 
   </section>
 </template>
 
 <style scoped>
-
 .main-content {
   display: flex;
   grid-column: 2;
