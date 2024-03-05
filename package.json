@@ -13,8 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@chakra-ui/vue": "^0.13.1",
-    "@emotion/css": "^11.11.2",
+    "@vueuse/core": "^10.9.0",
+    "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.1.7",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"

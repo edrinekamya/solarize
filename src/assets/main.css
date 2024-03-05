@@ -2,34 +2,121 @@
 
 #app {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
   font-weight: normal;
+  display: flex;
+  flex: 1;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+button {
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: indigo;
+  cursor: pointer;
+  outline: none;
+  padding: 4px 8px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+button:hover,
+button:active {
+  background-color: rgb(59, 7, 96);
+  color: var(--color-text-2);
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+button:disabled {
+  background: rgb(43, 32, 51);
+  color: rgb(118, 95, 135);
+  cursor: not-allowed;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+input {
+  color: var(--color-text);
+  outline: none;
+  border: none;
+}
+
+input:hover,
+input:active,
+input:focus {
+  border-color: indigo;
+}
+
+.icon {
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.icon:hover {
+  background: var(--color-background-slate);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.spaced {
+  justify-content: space-between;
+}
+
+.end {
+  justify-content: flex-end;
+}
+
+.gap {
+  gap: 8px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color: var(--color-text);
+}
+
+.text-muted {
+  color: var(--color-text-5);
+}
+
+.text-soft {
+  color: var(--color-text-2);
+}
+
+.text-heading {
+  color: var(--color-heading);
+}
+
+.bd {
+  border: 1px solid var(--color-border);
+}
+
+.bd-top {
+  border-top: 1px solid var(--color-border);
+}
+
+.bd-bottom {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bd-left {
+  border-left: 1px solid var(--color-border);
+}
+
+.bd-right {
+  border-right: 1px solid var(--color-border);
+}
+
+.bd-rounded {
+  border-radius: 4px;
 }
