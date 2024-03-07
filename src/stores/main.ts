@@ -1,16 +1,26 @@
+import { useLocalStorage } from '@vueuse/core'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 // stores app-wide state
 export const useMainStore = defineStore('main', {
   state: () => ({
-    sessions: [] as UserSession[],
+    sessions: useLocalStorage('solarize/sessions', {} as Record<number, UserSession>),
     statusFilters: ['Active', 'Complete', 'Scheduled'] as SessionStatus[],
     statusFilter: 'Active' as SessionStatus
   }),
   getters: {
-    filteredSessions: (state) => state.sessions.filter((s) => s.status === state.statusFilter)
+    allSessions: (state) => Object.values(state.sessions),
+    filteredSessions(state): UserSession[] {
+      return this.allSessions.filter((s) => true)
+    }
   },
-  actions: {}
+  actions: {
+    addSession(session: UserSession) {
+      const id = session.id ?? this.allSessions.length
+      this.sessions[id] = { ...session, id }
+      return id
+    }
+  }
 })
 
 if (import.meta.hot) {

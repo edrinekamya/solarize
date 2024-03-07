@@ -1,34 +1,33 @@
 <script setup lang="ts">
-import { useElementBounding, useWindowSize } from '@vueuse/core';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const isOpen = ref(false);
 const parent = ref<HTMLElement | null>(null);
 const popup = ref<HTMLElement | null>(null);
+const top = ref(0);
+const left = ref(0);
 
-function toggle() {
+async function toggle() {
   isOpen.value = !isOpen.value;
-
+  await nextTick()
+  positionPopup()
 }
-const { width: windowWidth, height: windowHeight } = useWindowSize();
-const { x: parentLeft, y: parentTop } = useElementBounding(parent);
-const { width: popupWidth, height: popupHeight } = useElementBounding(popup);
 
-const left = computed(() => {
-  if (parentLeft.value + popupWidth.value > windowWidth.value) {
-    return popupWidth.value - windowWidth.value - parentLeft.value;
+function positionPopup() {
+  if (parent.value == null || popup.value == null) return
+  const triggerRect = parent.value.getBoundingClientRect();
+  const popupRect = popup.value.getBoundingClientRect();
+  if (triggerRect.left + popupRect.width > window.innerWidth) {
+    left.value = (triggerRect.left - popupRect.width + triggerRect.width);
   } else {
-    return parentLeft.value;
+    left.value = triggerRect.left;
   }
-})
-
-const top = computed(() => {
-  if (parentTop.value + popupHeight.value > windowHeight.value) {
-    return popupHeight.value - windowHeight.value - parentTop.value;
+  if (triggerRect.top + popupRect.height > window.innerHeight) {
+    top.value = (triggerRect.top - popupRect.height);
   } else {
-    return parentTop.value;
+    top.value = triggerRect.bottom;
   }
-})
+}
 
 function close() {
   isOpen.value = false
@@ -36,10 +35,12 @@ function close() {
 
 onMounted(() => {
   document.body.addEventListener('click', close);
+  window.addEventListener('resize', positionPopup);
 });
 
 onBeforeUnmount(() => {
   document.body.removeEventListener('click', close);
+  window.removeEventListener('resize', positionPopup);
 });
 
 defineExpose({
@@ -49,9 +50,9 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="parent">
+  <div ref="parent" class="parent">
     <transition name="fade">
-      <div @click.stop="null" v-if="isOpen" :style="{ top: `${top}px`, left: `${left}px` }" ref="popup" class="popup">
+      <div :style="{ top: top + 'px', left: left + 'px' }" @click.stop="null" v-show="isOpen" ref="popup" class="popup">
         <slot></slot>
       </div>
     </transition>
@@ -65,7 +66,8 @@ defineExpose({
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--color-border);
-  position: fixed;
+  position: absolute;
+  margin: 4px;
 }
 
 .fade-enter-active,

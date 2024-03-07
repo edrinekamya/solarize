@@ -7,9 +7,27 @@ import App from './App.vue'
 import router from './router'
 
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
-import { CoSearch, MdNotificationsOutlined, BiPlus, MdError } from 'oh-vue-icons/icons'
+import {
+  CoSearch,
+  MdNotificationsOutlined,
+  BiPlus,
+  MdError,
+  FaEllipsisV,
+  HiSolidArrowCircleRight,
+  HiSolidArrowCircleLeft,
+  MdCancelRound
+} from 'oh-vue-icons/icons'
 
-addIcons(CoSearch, MdNotificationsOutlined, BiPlus, MdError)
+addIcons(
+  CoSearch,
+  MdNotificationsOutlined,
+  BiPlus,
+  MdError,
+  FaEllipsisV,
+  HiSolidArrowCircleRight,
+  HiSolidArrowCircleLeft,
+  MdCancelRound
+)
 
 const app = createApp(App)
 app.component('v-icon', OhVueIcon)

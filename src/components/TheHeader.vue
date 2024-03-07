@@ -27,7 +27,7 @@ const agent = ref<IAgent>();
         <span v-if="notifications.length > 0" class="notification-badge">{{ notifications.length }}</span>
         <TheIconButton name="md-notifications-outlined" @press="notificationPopup?.toggle()" />
         <ThePopup ref="notificationPopup">
-          <p>Hello word. This is a long as text right here</p>
+          <p></p>
           <div v-if="notificationPopup" class="bd notification-popup">
             <ul>
               <li v-for="notification in notifications" :key="notification.id">
@@ -42,7 +42,6 @@ const agent = ref<IAgent>();
         <ThePopup ref="userPopup">
           <div class="user-popup">
             <p>{{ agent?.name }}</p>
-            
           </div>
         </ThePopup>
       </div>
@@ -78,6 +77,7 @@ input {
   width: 32px;
   height: 32px;
   background: indigo;
+  color: white;
   border-radius: 32px;
   cursor: pointer;
 }
@@ -86,4 +86,7 @@ input {
   background: rgb(61, 3, 102);
 }
 
+.notification-popup {
+  min-width: 40vh;
+}
 </style>

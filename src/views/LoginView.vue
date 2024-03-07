@@ -83,7 +83,7 @@ watchEffect(() => {
   font-size: 48px;
   font-weight: bold;
   text-align: center;
-  color: indigo;
+  color: var(--color-accent-3);
 }
 
 .auth-description {
