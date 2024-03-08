@@ -70,14 +70,14 @@ export const slideShow: SlideShow = {
         description: 'Designed for businesses and commercial properties.',
         pricing: 10000,
         pricingFrequency: 'one-time',
-        image: 'commercial.png'
+        image: '/src/assets/commercial.png'
       },
       1: {
         name: 'Residential',
         description: 'Tailored for homeowners and residential properties.',
         pricing: 8000,
         pricingFrequency: 'one-time',
-        image: 'residential.png'
+        image: '/src/assets/residential.png'
       }
     }
   },
@@ -90,7 +90,7 @@ export const slideShow: SlideShow = {
         description: 'Standard solar panels providing good efficiency at an affordable cost.',
         pricing: 2000,
         pricingFrequency: 'one-time',
-        image: 'poly.png'
+        image: '/src/assets/poly.png'
       },
       1: {
         name: 'Monocrystalline',
@@ -98,14 +98,14 @@ export const slideShow: SlideShow = {
           'High-efficiency panels with sleek design, suitable for limited space installations.',
         pricing: 1500,
         pricingFrequency: 'one-time',
-        image: 'mono.png'
+        image: '/src/assets/mono.png'
       },
       2: {
         name: 'Thin Film',
         description: 'Flexible and lightweight panels suitable for curved or irregular surfaces.',
         pricing: 500,
         pricingFrequency: 'one-time',
-        image: 'thin.png'
+        image: '/src/assets/thin.png'
       }
       // Add more panel types as needed
     }

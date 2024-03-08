@@ -13,7 +13,7 @@ const currentSlide = computed(() => slideShow.slides[props.slide]);
     <div class="grid-item column" v-for="(c, index) in currentSlide.customizations"
       @click="slideShow.addCustomization(slide, index, currentSlide.type, c.pricing)" :key="c.name"
       :class="{ selected: customizations.includes(index) }">
-      <img class="flex" v-if="c.image" :src="`/src/assets/${c.image}`" />
+      <img class="flex" v-if="c.image" :src="c.image" />
       <div class="column info">
         <section class="row gap spaced">
           <h3> {{ c.name }}</h3>
