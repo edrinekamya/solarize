@@ -4,7 +4,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 // stores app-wide state
 export const useMainStore = defineStore('main', {
   state: () => ({
-    sessions: useLocalStorage('solarize/sessions', {} as Record<number, UserSession>),
+    sessions: useLocalStorage('solarize/user-sessions', {} as Record<number, UserSession>),
     statusFilters: ['Active', 'Complete', 'Scheduled'] as SessionStatus[],
     statusFilter: 'Active' as SessionStatus,
     search: '',

@@ -39,6 +39,7 @@ function changeDescription(index: number) {
       </div>
     </div>
     <ThePopup ref="popup">
+      
       <div class="column calculator">
         <h2>Savings Calculator</h2>
         <label>Solar Panel Output (kW)
