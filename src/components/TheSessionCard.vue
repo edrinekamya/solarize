@@ -1,62 +1,33 @@
 <script setup lang='ts'>
 import TheIconButton from '@/components/TheIconButton.vue';
-import ThePopup from '@/components/ThePopup.vue';
+import TheSlideContent from '@/components/TheSlideContent.vue';
+import { useMainStore } from '@/stores/main';
 import { useSlideStore } from '@/stores/session';
-import { ref } from 'vue';
+import { useTimeAgo } from '@vueuse/core';
 
-defineProps<{ session: UserSession }>()
-
-const popup = ref<Popup>(null)
-const slides = useSlideStore();
-
-const deleteSession = () => {
-
-};
-
-const scheduleSession = () => {
-
-};
-
-const editSession = () => {
-
-};
-
-const shareSession = () => {
-
-};
+const props = defineProps<{ session: UserSession }>()
+const slidesShow = useSlideStore();
+const main = useMainStore()
+const timeAgo = useTimeAgo(props.session.lastOpened)
 
 </script>
 
 <template>
-  <article @click="slides.startExisting(session)">
-    <section class="last-session">
+  <article @click="slidesShow.startExisting(session)">
+    <section class="flex column last-session">
       <div @click.stop class="top row spaced">
-        <input type="text" placeholder="Untitled" class="session-name" />
-        <TheIconButton @press="popup?.toggle()" name="FaEllipsisV">
-          <ThePopup ref="popup">
-            <div class="session-options">
-              <li class="session-option" @click="deleteSession">Delete</li>
-              <li class="session-option" @click="scheduleSession">Schedule</li>
-              <li class="session-option" @click="editSession">Edit</li>
-              <li class="session-option" @click="shareSession">Share</li>
-            </div>
-          </ThePopup>
-        </TheIconButton>
+        <input type="text" placeholder="Untitled" v-model="main.sessions[(session.id as number)].customer"
+          class="session-name" />
+        <TheIconButton @press="main.deleteSession(session.id)" name="MdDeleteforeverRound" />
       </div>
+      <TheSlideContent :customizations="session.customizations" :index="session.slideNumber" />
     </section>
-    <div class="session-info">
-      <div class="row spaced session-progress">
-        <span class="session-progress-label">Progress</span>
-        <progress :value="session.progress" max="100" class="session-progress-bar"></progress>
-      </div>
-      <div class="session-date">
-        <span class="session-date-label">Last edited</span>
-        <!-- <span class="session-date-value">{{ session.date }}</span> -->
-      </div>
-      <div class="session-status">
-        <span class="session-status-label">Status</span>
-        <span class="session-status-value" :class="session.status">{{ session.status }}</span>
-      </div>
+    <div class="session-info row spaced">
+      <p>Last Updated {{ timeAgo }}</p>
+      <section v-if="session.status == 'Active'"><progress :value="session.progress" :max="slidesShow.numOfSlides"
+          class="session-progress-bar"></progress> {{ session.progress }}/{{ slidesShow.numOfSlides }}</section>
+      <section v-else-if="session.status == 'Scheduled'"></section>
+      <section v-else></section>
     </div>
   </article>
 </template>
@@ -71,18 +42,22 @@ article {
 .last-session {
   height: 250px;
   position: relative;
-  background: var(--color-background-soft);
   border-radius: 16px;
+  overflow: hidden;
 }
 
 .last-session>.top {
-  position: absolute;
-  width: 100%;
   padding: 16px;
   padding-right: 12px;
 }
 
 .session-info {
   padding: 16px;
+}
+
+.session-name {
+  font-size: 16px;
+  font-weight: bold;
+  background: var(--color-background-mute);
 }
 </style>

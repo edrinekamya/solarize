@@ -1,12 +1,20 @@
 <script setup lang='ts'>
-import { useSlideStore } from '@/stores/session';
 
-const slideShow = useSlideStore()
+defineProps<{useCase: number}>()
+
 
 </script>
 
 <template>
-  <div></div>
+  <div class="flex">
+    <img :src="`/src/assets/model${useCase ?? 0}.png`" />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+}
+</style>

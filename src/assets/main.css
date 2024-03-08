@@ -8,20 +8,39 @@
   flex: 1;
 }
 
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
 .grid-container {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
+  padding: 8px 20px;
 }
 
 .grid-item {
-  background: var(--color-background-soft);
-  padding: 8px;
-  border-radius: 8px;
+  background: var(--color-background);
+  border-radius: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  aspect-ratio: 1;
+  transition: all 0.1s ease;
 }
+
+.grid-item.selected {
+  border: 2px solid indigo;
+}
+
+.logo {
+  height: 24px;
+}
+
 
 button {
   height: 32px;
@@ -99,6 +118,11 @@ input:focus {
   gap: 8px;
 }
 
+.gap-s {
+  gap: 4px;
+}
+
+
 .center {
   display: flex;
   justify-content: center;
@@ -143,4 +167,45 @@ input:focus {
 
 .bd-rounded {
   border-radius: 4px;
+}
+
+/* Common vue transitions */
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform .5s;
+}
+.slide-enter, .slide-leave-to {
+  transform: translateX(100%);
+}
+.slide-leave, .slide-enter-to {
+  transform: translateX(0);
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease-in;
 }

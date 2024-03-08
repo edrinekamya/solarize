@@ -1,39 +1,45 @@
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
-const isOpen = ref(false);
-const parent = ref<HTMLElement | null>(null);
+const isPopupVisible = ref(false);
+const popupButton = ref<HTMLElement | null>(null);
 const popup = ref<HTMLElement | null>(null);
-const top = ref(0);
-const left = ref(0);
 
-async function toggle() {
-  isOpen.value = !isOpen.value;
-  await nextTick()
-  positionPopup()
-}
-
-function positionPopup() {
-  if (parent.value == null || popup.value == null) return
-  const triggerRect = parent.value.getBoundingClientRect();
-  const popupRect = popup.value.getBoundingClientRect();
-  if (triggerRect.left + popupRect.width > window.innerWidth) {
-    left.value = (triggerRect.left - popupRect.width + triggerRect.width);
-  } else {
-    left.value = triggerRect.left;
+const toggle = () => {
+  
+  isPopupVisible.value = !isPopupVisible.value;
+  if (isPopupVisible.value) {
+    positionPopup();
   }
-  if (triggerRect.top + popupRect.height > window.innerHeight) {
-    top.value = (triggerRect.top - popupRect.height);
-  } else {
-    top.value = triggerRect.bottom;
-  }
-}
+};
 
 function close() {
-  isOpen.value = false
+  isPopupVisible.value = false
 }
 
+defineExpose({
+  toggle
+})
+
+const positionPopup = async () => {
+  await nextTick()
+  if (!popupButton.value || !popup.value) return
+  const triggerRect = popupButton.value.getBoundingClientRect();
+  const popupRect = popup.value.getBoundingClientRect();
+  if (triggerRect.left + popupRect.width > window.innerWidth) {
+    popup.value.style.left = (triggerRect.left - popupRect.width + triggerRect.width) + 'px';
+  } else {
+    popup.value.style.left = triggerRect.left + 'px';
+  }
+  if (triggerRect.top + popupRect.height > window.innerHeight) {
+    popup.value.style.top = (triggerRect.top - popupRect.height) + 'px';
+  } else {
+    popup.value.style.top = triggerRect.bottom + 'px';
+  }
+};
+
 onMounted(() => {
+  positionPopup()
   document.body.addEventListener('click', close);
   window.addEventListener('resize', positionPopup);
 });
@@ -42,32 +48,36 @@ onBeforeUnmount(() => {
   document.body.removeEventListener('click', close);
   window.removeEventListener('resize', positionPopup);
 });
-
-defineExpose({
-  toggle
-})
-
 </script>
 
 <template>
-  <div ref="parent" class="parent">
-    <transition name="fade">
-      <div :style="{ top: top + 'px', left: left + 'px' }" @click.stop="null" v-show="isOpen" ref="popup" class="popup">
-        <slot></slot>
-      </div>
-    </transition>
+  <div class="popup-container">
+    <button ref="popupButton" class="popup-button" @click="toggle">
+      <slot name="trigger"></slot>
+    </button>
+    <div ref="popup" class="popup" v-if="isPopupVisible">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <style scoped>
+button {
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+}
+
 .popup {
-  background: var(--color-background-mute);
-  padding: 8px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--color-border);
   position: absolute;
-  margin: 4px;
+  z-index: 99;
+  padding: 10px;
+  border-radius: 24px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: var(--color-background-mute);
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
 }
 
 .fade-enter-active,

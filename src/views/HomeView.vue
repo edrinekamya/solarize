@@ -1,29 +1,24 @@
 <script setup lang="ts">
 import TheHeader from '@/components/TheHeader.vue';
 import TheMainContent from '@/components/TheMainContent.vue';
+
+import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
+import { watchEffect } from 'vue';
+const auth = useAuthStore();
+
+watchEffect(() => {
+  if (!auth.agent.id) {
+    router.replace('/login')
+  }
+})
+
 </script>
 
 <template>
-  <main>
+  <main class="flex column">
     <TheHeader />
     <TheMainContent />
-    <aside class="right-aside">
-    </aside>
   </main>
 </template>
 
-<style scoped>
-main {
-  flex: 1;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
-}
-
-.right-aside {
-  grid-column: 1;
-  grid-row: 2;
-  min-width: 48px;
-}
-
-</style>

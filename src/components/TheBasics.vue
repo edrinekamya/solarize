@@ -1,26 +1,128 @@
 <script setup lang="ts">
+import TheIcon from "@/components/TheIcon.vue";
+import ThePopup from "@/components/ThePopup.vue";
 import { solarReasons } from "@/data";
+import { computed, ref } from "vue";
+
+const panelOutput = ref(0);
+const sunlightHours = ref(0);
+const electricityCost = ref(0);
+const popup = ref<Popup>(null)
+
+const annualOutput = computed(() => panelOutput.value * sunlightHours.value * 365);
+const annualSavings = computed(() => annualOutput.value * electricityCost.value);
+
+const currentIndex = ref<any>(null)
+
+const selectedReason = computed(() => currentIndex.value != null ? solarReasons[currentIndex.value] : null)
+
+function changeDescription(index: number) {
+  currentIndex.value = currentIndex.value == index ? null : index
+}
 
 </script>
 
 <template>
-  <div class="gap column">
+  <div class="container gap column">
     <div class="grid-container">
-      <div class="grid-item center" v-for="(section, index) in solarReasons" :key="index">
+      <div @click="changeDescription(index)" :class="{ selected: currentIndex == index }" class="grid-item column"
+        v-for="(section, index) in solarReasons" :key="index">
         <h2>{{ section.title }}</h2>
+        <section class="row">
+          <p>{{ section.description }}</p>
+          <Transition name="fade">
+            <div class="column reasons" v-if="currentIndex == index">
+              <li v-for="m in selectedReason?.merits" :key="m">{{ m }}</li>
+            </div>
+          </Transition>
+        </section>
       </div>
     </div>
+    <ThePopup ref="popup">
+      <div class="column calculator">
+        <h2>Savings Calculator</h2>
+        <label>Solar Panel Output (kW)
+          <input v-model.number="panelOutput" type="number" min="0">
+        </label>
+        <label>Average Sunlight Hours
+          <input v-model.number="sunlightHours" type="number" min="0">
+        </label>
+        <label>Electricity Cost (per kWh)
+          <input v-model.number="electricityCost" type="number" min="0">
+        </label>
+        <p>Annual Solar Output (kWh) </p>
+        <span class="total">{{ annualOutput }}</span>
+        <p>Annual Savings</p>
+        <span class="total">{{ annualSavings }}</span>
+      </div>
+    </ThePopup>
+
+    <Transition name="fade">
+      <button @click.stop="popup?.toggle()" v-if="currentIndex == 0" class="calculator-icon">
+        <TheIcon :scale="2" name="BiCalculator" />
+      </button>
+    </Transition>
+
   </div>
 </template>
 
 <style scoped>
+.total {
+  font-weight: bold;
+}
 
-h1 {
+.calculator {
+  padding: 10px;
+  background: var(--color-background);
+}
+
+.calculator-icon {
+  position: absolute;
+  bottom: 64px;
+  right: 24px;
+  height: auto;
+}
+
+input {
+  border: 1px solid var(--color-text-1);
+  display: flex;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.reasons {
+  background: var(--color-background-soft);
+  padding: 16px;
+  display: flex;
+  position: absolute;
+  border-radius: 12px
+}
+
+li {
+  padding: 2px 0;
+}
+
+.grid-container {
+  overflow: auto;
+}
+
+.grid-item {
+  transition: all 0.3s ease;
+  padding: 16px;
+}
+
+.selected {
+  box-shadow: none;
+}
+
+h1,
+h2 {
   color: var(--color-text-1);
 }
 
 h2 {
   font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
-
 </style>

@@ -1,14 +1,31 @@
 <script setup lang='ts'>
-import TheSlide from '@/components/TheSlide.vue';
-import { useSlideStore } from '@/stores/session';
+import TheCardPaymentForm from '@/components/TheCardPaymentForm.vue';
+import TheErrorMessage from '@/components/TheErrorMessage.vue';
+import TheMobilePaymentForm from '@/components/TheMobilePaymentForm.vue';
+import { usePaymentStore } from '@/stores/payment';
 
-const slideShow = useSlideStore()
-const currentSlide = slideShow.currentSlide;
+const payment = usePaymentStore()
+
 
 </script>
 
 <template>
-  <div></div>
+  <div class="flex column">
+    <TheErrorMessage :error-message="payment.error" />
+    <h2>{{ payment.paymentMethod == 'Mobile' ? 'Mobile Money' : 'Credit Card Payment' }}</h2>
+    <TheMobilePaymentForm v-if="payment.paymentMethod == 'Mobile'" />
+    <TheCardPaymentForm v-else />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+h2 {
+  text-align: center;
+  color: white;
+}
+
+.flex {
+  background: var(--color-background);
+  padding: 16px;
+}
+</style>

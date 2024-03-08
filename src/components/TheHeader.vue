@@ -2,13 +2,16 @@
 import TheIconButton from "@/components/TheIconButton.vue";
 import TheLogo from "@/components/TheLogo.vue";
 import ThePopup from "@/components/ThePopup.vue";
+import { useAuthStore } from "@/stores/auth";
+import { useMainStore } from "@/stores/main";
 import { ref } from "vue";
+import TheIcon from "@/components/TheIcon.vue";
 
-const searchQuery = ref("");
 const notifications = ref<INotification[]>([]);
-const notificationPopup = ref<typeof ThePopup | null>(null);
-const userPopup = ref(null);
-const agent = ref<IAgent>();
+const notificationPopup = ref<any>(null);
+const userPopup = ref<any>(null);
+const auth = useAuthStore()
+const main = useMainStore()
 
 </script>
 
@@ -20,36 +23,83 @@ const agent = ref<IAgent>();
     </section>
     <section class="row bd search-bar">
       <v-icon class="icon" name="co-search" />
-      <input class="search-input" v-model="searchQuery" type="text" placeholder="Find sessions" />
+      <input class="search-input" v-model="main.search" type="text" placeholder="Find sessions" />
     </section>
     <div class="row gap">
+
       <div>
         <span v-if="notifications.length > 0" class="notification-badge">{{ notifications.length }}</span>
-        <TheIconButton name="md-notifications-outlined" @press="notificationPopup?.toggle()" />
         <ThePopup ref="notificationPopup">
-          <p></p>
-          <div v-if="notificationPopup" class="bd notification-popup">
+          <template #trigger>
+            <TheIconButton name="md-notifications-outlined" @press="notificationPopup?.toggle()" />
+          </template>
+          <div class="notification-popup">
+            <h3 class="center">Notifications</h3>
             <ul>
-              <li v-for="notification in notifications" :key="notification.id">
+              <li v-for="notification in main.notifications" :key="notification.id">
                 {{ notification.content }}
               </li>
             </ul>
           </div>
         </ThePopup>
       </div>
-      <div>
-        <div class="center avatar">A</div>
-        <ThePopup ref="userPopup">
-          <div class="user-popup">
-            <p>{{ agent?.name }}</p>
+      <ThePopup ref="userPopup">
+        <template #trigger>
+          <div @click.stop="userPopup?.toggle()" class="center avatar">{{ auth.agent.name[0] }}</div>
+        </template>
+        <div class="column user-popup">
+          <div class="center column top">
+            <div class="big-avatar center">{{ auth.agent.name[0] }}</div>
+            <h2>#{{ auth.agent.id }}</h2>
+            <p>{{ auth.agent.name }}</p>
           </div>
-        </ThePopup>
-      </div>
+          <div class="bottom bd-top">
+            <section @click="auth.logout" class="row gap logout">
+              <TheIcon name="MdLogoutRound" />
+              <p>Logout</p>
+            </section>
+          </div>
+        </div>
+      </ThePopup>
     </div>
   </header>
 </template>
 
 <style scoped>
+.logout {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.logout:hover,
+.logout:active {
+  background: indigo;
+  color: white;
+}
+
+.big-avatar {
+  width: 64px;
+  height: 64px;
+  background: indigo;
+  border-radius: 64px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.user-popup>.top {
+  align-self: center;
+  padding: 16px;
+}
+
+.user-popup>.bottom {
+  padding: 10px 0px;
+}
+
+.top>p {
+  color: var(--color-text-1);
+  font-weight: bold;
+}
+
 .search-bar {
   padding: 4px 8px;
   border-radius: 8px;
@@ -59,7 +109,7 @@ const agent = ref<IAgent>();
   border: 2px solid indigo;
 }
 
-.search-bar:hover>.icon{
+.search-bar:hover>.icon {
   color: indigo;
 }
 
@@ -70,7 +120,11 @@ input {
 
 .header {
   padding: 8px;
-  grid-column: span 2;
+}
+
+.user-popup {
+  min-width: 40vh;
+  /* height: 60vh; */
 }
 
 .avatar {
@@ -87,6 +141,7 @@ input {
 }
 
 .notification-popup {
-  min-width: 40vh;
+  min-width: 70vh;
+  height: 70vh;
 }
 </style>

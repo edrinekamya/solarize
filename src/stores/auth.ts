@@ -1,33 +1,36 @@
+import { useLocalStorage } from '@vueuse/core'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    agentId: '',
-    loggedIn: false,
     errorMessage: '',
-    loading: false
+    agentId: '',
+    loading: false,
+    agent: useLocalStorage('solarize/auth', {} as IAgent)
   }),
   getters: {},
   actions: {
     async login() {
       // Simulate authentication logic
-      // Add a delay of 2 seconds to simulate lag
+      // Add a delay of 1 seconds to simulate lag
       this.loading = true
       setTimeout(() => {
         if (this.agentId === '007') {
           // only give access to James Bond😂😂
-          this.loggedIn = true
+          this.agent = {
+            id: this.agentId,
+            name: 'James Bond'
+          }
           this.errorMessage = ''
         } else {
           this.errorMessage = "Sorry you're not James Bond"
         }
         this.loading = false;
-      }, 2000)
+      }, 1000)
     },
 
     logout() {
-      this.loggedIn = false
-      this.agentId = ''
+      this.agent = {} as IAgent
     }
   }
 })

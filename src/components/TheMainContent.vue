@@ -28,6 +28,7 @@ const session = useSlideStore();
         <TheSessionCard v-for="s in store.filteredSessions" :key="s.id" :session="s" />
       </section>
     </section>
+    
     <section v-else class="empty flex column center">
       <h1>No previous sessions</h1>
       <p>Start a new user session</p>
@@ -66,7 +67,6 @@ const session = useSlideStore();
 }
 
 .main-content {
-  grid-column: 2;
   overflow: auto;
 }
 
@@ -76,7 +76,7 @@ header {
 
 .session-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 500px));
   grid-gap: 16px;
   padding: 16px;
   overflow: auto;

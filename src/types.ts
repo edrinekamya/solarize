@@ -9,10 +9,12 @@ declare global {
   type SlideType =
     | 'introduction'
     | 'basics'
+    | 'payment-plan'
     | 'customization' // can choose one or not
     | 'confirmation'
     | 'visualization'
     | 'payment'
+    | 'payment-method'
     | 'services'
     | 'conclusion'
     | 'choice' // compulsory to choose
@@ -21,8 +23,16 @@ declare global {
     name: string
     description: string
     pricing?: number
+    image?: string
     pricingFrequency?: 'one-time' | 'monthly' | 'quarterly' | 'annually'
     exclude?: number[] // excludes some customization from previous step
+  }
+
+  type PaymentPlan = {
+    name: string
+    discount: number
+    description: string
+    duration: number
   }
 
   interface Slide {
@@ -31,8 +41,12 @@ declare global {
     customizations?: Record<number, ICustomization> // possible customizations to the previous slide
   }
 
+  type PaymentMethod = 'Card' | 'Mobile'
+  type PaymentStep = 'Form' | 'Securing' | 'Validating' | 'Processing' | 'Success'
+  type PaymentProvider = 'MTN' | 'AIRTEL' | 'VISA' | 'MASTERCARD' | 'AMEX'
+
   type SelectionMap = Record<number, number> // map of slide to all customization selected at that slide
-  type Selections = Record<number, number[]>
+  type Customizations = Record<number, number[]>
   type SlideShow = Record<number, Slide>
 
   type Popup = typeof ThePopup | null
@@ -48,19 +62,26 @@ declare global {
   }
 
   interface IAgent {
+    id: string
     name: string
   }
 
+  type ICost = Record<number, number>
+
+  type Costs = Record<number, ICost>
+
   // Interface for user sessions
   interface UserSession {
-    customizations: Selections
+    customizations: Customizations
     slideNumber: number
     progress: number
-    customer?: string
-    status?: SessionStatus
+    customer: string
+    paymentPlan: PaymentPlan
+    cost: Costs
+    status: SessionStatus
     id?: number
+    lastOpened:string
   }
-
 
   // Interface for individual slide content
   interface SlideContent {
@@ -92,10 +113,11 @@ declare global {
   // Interface for notifications
   interface INotification {
     id: string
-    type: 'email' | 'push' | 'in-app'
+    type: 'email' | 'push' | 'in-app' | 'important'
     recipient: string
     content: string
-    timestamp: Date
+    timestamp: string
+    read?: boolean
   }
 }
 

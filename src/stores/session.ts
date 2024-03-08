@@ -2,30 +2,44 @@ import { slideShow } from '@/data'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useSlideStore = defineStore('session', {
-  state: () => ({
-    isOnGoing: false,
-    id: undefined as number | undefined,
-    slideNumber: 0,
-    progress: 0,
-    customizations: {} as Selections,
-    status: 'Active' as SessionStatus,
-    slides: slideShow,
-    timeElapsed: Date // the elapsed time since this session was started,
-  }),
+  state: () =>
+    ({
+      session: {
+        id: undefined as number | undefined,
+        slideNumber: 0,
+        progress: 0,
+        customer: 'Untitled',
+        paymentPlan: undefined as PaymentPlan | undefined,
+        customizations: {} as Customizations,
+        cost: {} as Costs,
+        status: 'Active' as SessionStatus
+      },
+      slides: slideShow,
+      isOnGoing: false
+    }) as { session: UserSession; isOnGoing: boolean; slides: SlideShow },
   getters: {
-    currentSlide: (state) => state.slides[state.slideNumber],
+    currentSlide: (state) => state.slides[state.session.slideNumber],
+    discountedCost(): number {
+      const discount = this.session.paymentPlan ? this.session.paymentPlan.discount : 0
+      return this.totalCost * (1 - discount)
+    },
+    totalCost(state) {
+      const values = Object.values(state.session.cost).flatMap((x) => Object.values(x))
+      return values.length ? values.reduce((a, b) => a + b) : 0
+    },
     numOfSlides: (state) => Object.keys(state.slides).length,
-    session: ({ progress, slideNumber, customizations, id }) => ({
-      progress,
-      slideNumber,
-      customizations,
-      id
-    }),
+    isLast(): boolean {
+      return this.currentSlide.type == 'conclusion'
+    },
+    
     hideNext(state): boolean {
       return (
         this.currentSlide.type == 'confirmation' ||
-        state.slideNumber === this.numOfSlides - 1 ||
-        (this.currentSlide.type === 'choice' && !state.customizations[this.slideNumber])
+        state.session.slideNumber === this.numOfSlides - 1 ||
+        (this.currentSlide.type === 'choice' &&
+          !state.session.customizations[this.session.slideNumber]) ||
+        (this.currentSlide.type === 'payment-method' && !state.session.paymentPlan) ||
+        this.session.slideNumber > 9
       )
     }
   },
@@ -35,46 +49,59 @@ export const useSlideStore = defineStore('session', {
       this.$reset()
       this.isOnGoing = true
     },
+    close() {
+      this.isOnGoing = false
+    },
 
     // hydrate from an existing session map
     startExisting(session: UserSession) {
-      this.$reset()
-      this.$patch(session)
+      this.session = session
       this.isOnGoing = true
+    },
+
+    schedule() {
+      this.session.status == 'Scheduled'
+      this.close()
     },
 
     // meant to go to a previous slide
     goToSlide(n: number) {
-      this.slideNumber = n
+      this.session.slideNumber = n
     },
 
-    addCustomization(customization: number, type: SlideType) {
-      if (type === 'choice') {
-        this.customizations[this.slideNumber] = [customization]
-      } else {
-        if (!this.customizations[this.slideNumber]) {
-          this.customizations[this.slideNumber] = []
+    addCustomization(slideNumber: number, customization: number, type: SlideType, price?: number) {
+      if (price) {
+        if (!this.session.cost[slideNumber]) {
+          this.session.cost[slideNumber] = {}
         }
-        if (this.customizations[this.slideNumber].includes(customization)) {
-          this.customizations[this.slideNumber] = this.customizations[this.slideNumber].filter(
-            (x) => x != customization
-          )
+        this.session.cost[slideNumber][customization] = price
+      }
+      if (type === 'choice') {
+        this.session.customizations[slideNumber] = [customization]
+      } else {
+        if (!this.session.customizations[slideNumber]) {
+          this.session.customizations[slideNumber] = []
+        }
+        if (this.session.customizations[slideNumber].includes(customization)) {
+          this.session.customizations[slideNumber] = this.session.customizations[
+            slideNumber
+          ].filter((x) => x != customization)
         } else {
-          this.customizations[this.slideNumber].push(customization)
+          this.session.customizations[slideNumber].push(customization)
         }
       }
     },
 
     nextSlide() {
-      this.slideNumber += 1
-      if (this.progress < this.slideNumber) {
-        this.progress += 1
+      this.session.slideNumber += 1
+      if (this.session.progress < this.session.slideNumber) {
+        this.session.progress += 1
       }
     },
 
     // should go back one level
     previousSlide() {
-      this.slideNumber = Math.max(0, this.slideNumber - 1)
+      this.session.slideNumber = Math.max(0, this.session.slideNumber - 1)
     }
   }
 })

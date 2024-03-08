@@ -12,10 +12,19 @@ import {
   MdNotificationsOutlined,
   BiPlus,
   MdError,
-  FaEllipsisV,
+  MdDeleteforeverRound,
   HiSolidArrowCircleRight,
   HiSolidArrowCircleLeft,
-  MdCancelRound
+  MdCancelRound,
+  BiCalculator,
+  FaSpinner,
+  FaCogs,
+  BiCheckCircleFill,
+  FaLock,
+  MdVerifieduserRound,
+  FcCellPhone,
+  FcLibrary,
+  MdLogoutRound
 } from 'oh-vue-icons/icons'
 
 addIcons(
@@ -23,10 +32,19 @@ addIcons(
   MdNotificationsOutlined,
   BiPlus,
   MdError,
-  FaEllipsisV,
+  MdDeleteforeverRound,
   HiSolidArrowCircleRight,
   HiSolidArrowCircleLeft,
-  MdCancelRound
+  MdCancelRound,
+  BiCalculator,
+  FaSpinner,
+  FaCogs,
+  BiCheckCircleFill,
+  FaLock,
+  MdVerifieduserRound,
+  FcCellPhone,
+  FcLibrary,
+  MdLogoutRound
 )
 
 const app = createApp(App)

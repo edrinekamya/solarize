@@ -1,12 +1,14 @@
 <script setup lang='ts'>
+import { useSlideStore } from '@/stores/session';
 
+const slides = useSlideStore()
 </script>
 
 <template>
-  <div class="container row gap">
-    <button class="no">No, Thank You</button>
-    <button class="later bd">Maybe later</button>
-    <button class="yes">Yes, Please</button>
+  <div class="container flex row center gap">
+    <button @click="slides.close" class="no">No, Thank You</button>
+    <button @click="slides.schedule" class="later bd">Maybe later</button>
+    <button @click="slides.nextSlide" class="yes">Yes, I'm In</button>
   </div>
 </template>
 

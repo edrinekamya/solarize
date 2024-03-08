@@ -54,6 +54,10 @@ h1 {
 
 .company-slide {
   padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  margin: 24px;
+  border-radius: 64px;
 }
 
 .mission-statement {

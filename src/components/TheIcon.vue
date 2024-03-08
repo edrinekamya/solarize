@@ -2,9 +2,11 @@
 import { camelToKebab } from '@/util';
 defineProps<{
   name: string
+  scale?: number,
+  animation?: 'wrench' | 'ring' | 'pulse' | 'spin' | 'spin-pulse' | 'flash' | 'float'
 }>()
 </script>
 
 <template>
-  <v-icon :name="camelToKebab(name)" />
+  <v-icon :scale="scale" :animation="animation" :name="camelToKebab(name)" />
 </template>

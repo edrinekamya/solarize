@@ -26,7 +26,7 @@ const router = createRouter({
 // Add a global before guard to check the authentication status before entering a route
 router.beforeEach((to) => {
   const auth = useAuthStore()
-  if (to.meta.requiresAuth && !auth.loggedIn) {
+  if (to.meta.requiresAuth && !auth.agent.id) {
     return 'login'
   }
 })
