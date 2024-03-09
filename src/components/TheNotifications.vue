@@ -42,8 +42,10 @@ function sendRandomNotification() {
   })
 
   // Schedule the next notification
-  const nextNotificationDelay = Math.random() * (10 - 5) + 5 // Random delay between 5 and 10 minutes
-  setTimeout(sendRandomNotification, nextNotificationDelay * 60 * 1000)
+  if (main.notifications.length < 5) {
+    const nextNotificationDelay = Math.random() * (10 - 5) + 5 // Random delay between 5 and 10 minutes
+    setTimeout(sendRandomNotification, nextNotificationDelay * 60 * 1000)
+  }
 }
 
 onMounted(() => {
