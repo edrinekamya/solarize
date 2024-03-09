@@ -1,16 +1,6 @@
 <script setup lang="ts">
-import TheIcon from "@/components/TheIcon.vue";
-import ThePopup from "@/components/ThePopup.vue";
 import { solarReasons } from "@/data";
 import { computed, ref } from "vue";
-
-const panelOutput = ref(0);
-const sunlightHours = ref(0);
-const electricityCost = ref(0);
-const popup = ref<Popup>(null)
-
-const annualOutput = computed(() => panelOutput.value * sunlightHours.value * 365);
-const annualSavings = computed(() => annualOutput.value * electricityCost.value);
 
 const currentIndex = ref<any>(null)
 
@@ -38,32 +28,6 @@ function changeDescription(index: number) {
         </section>
       </div>
     </div>
-    <ThePopup ref="popup">
-      
-      <div class="column calculator">
-        <h2>Savings Calculator</h2>
-        <label>Solar Panel Output (kW)
-          <input v-model.number="panelOutput" type="number" min="0">
-        </label>
-        <label>Average Sunlight Hours
-          <input v-model.number="sunlightHours" type="number" min="0">
-        </label>
-        <label>Electricity Cost (per kWh)
-          <input v-model.number="electricityCost" type="number" min="0">
-        </label>
-        <p>Annual Solar Output (kWh) </p>
-        <span class="total">{{ annualOutput }}</span>
-        <p>Annual Savings</p>
-        <span class="total">{{ annualSavings }}</span>
-      </div>
-    </ThePopup>
-
-    <Transition name="fade">
-      <button @click.stop="popup?.toggle()" v-if="currentIndex == 0" class="calculator-icon">
-        <TheIcon :scale="2" name="BiCalculator" />
-      </button>
-    </Transition>
-
   </div>
 </template>
 
@@ -84,12 +48,7 @@ function changeDescription(index: number) {
   height: auto;
 }
 
-input {
-  border: 1px solid var(--color-text-1);
-  display: flex;
-  border-radius: 4px;
-  padding: 8px;
-}
+
 
 .reasons {
   background: var(--color-background-soft);

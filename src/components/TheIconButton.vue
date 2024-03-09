@@ -3,6 +3,7 @@
 import { camelToKebab } from '@/util';
 defineProps<{
   name: string
+  scale?: number
 }>()
 
 const emit = defineEmits(['press']);
@@ -11,7 +12,7 @@ const emit = defineEmits(['press']);
 
 <template>
   <button class="center" @click.stop="emit('press')" type="button">
-    <v-icon :name="camelToKebab(name)" />
+    <v-icon :scale="scale" :name="camelToKebab(name)" />
     <slot></slot>
   </button>
 </template>

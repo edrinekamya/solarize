@@ -25,10 +25,12 @@ const session = useSlideStore();
         </button>
       </header>
       <section class="session-cards">
-        <TheSessionCard v-for="s in store.filteredSessions" :key="s.id" :session="s" />
+        <TransitionGroup name="list">
+          <TheSessionCard v-for="s in store.filteredSessions" :key="s.id" :session="s" />
+        </TransitionGroup>
       </section>
     </section>
-    
+
     <section v-else class="empty flex column center">
       <h1>No previous sessions</h1>
       <p>Start a new user session</p>

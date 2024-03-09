@@ -26,6 +26,7 @@ h2 {
 
 .flex {
   background: var(--color-background);
-  padding: 16px;
+  border-radius: 16px;
+  padding: 12px;
 }
 </style>

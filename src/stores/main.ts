@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@vueuse/core'
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 // stores app-wide state
 export const useMainStore = defineStore('main', {
@@ -8,12 +8,23 @@ export const useMainStore = defineStore('main', {
     statusFilters: ['Active', 'Complete', 'Scheduled'] as SessionStatus[],
     statusFilter: 'Active' as SessionStatus,
     search: '',
-    notifications: [] as INotification[]
+    notificationsMap: useLocalStorage('solarize/notifications', {} as Record<string, INotification>)
   }),
   getters: {
+    notifications: (state) => Object.values(state.notificationsMap),
+    hasUnreadImportant(): INotification[] {
+      return this.unread.filter((x) => x.type === 'important' && !x.read)
+    },
+    unread(): INotification[] {
+      return this.notifications.filter(x => !x.read)
+    },
     allSessions: (state) => Object.values(state.sessions),
     filteredSessions(state): UserSession[] {
-      return this.allSessions.filter((s) => s.status == state.statusFilter && s.customer.toLocaleLowerCase().includes(state.search.trim().toLocaleLowerCase()))
+      return this.allSessions.filter(
+        (s) =>
+          s.status == state.statusFilter &&
+          s.customer.toLocaleLowerCase().includes(state.search.trim().toLocaleLowerCase())
+      )
     }
   },
   actions: {
@@ -22,11 +33,20 @@ export const useMainStore = defineStore('main', {
       this.sessions[id] = { ...session, id }
       return id
     },
-    addNotification(notification: INotification) {
-      this.notifications.push(notification)
+    markAllAsRead() {
+      for (const id in this.notificationsMap) {
+        this.notificationsMap[id].read = true
+      }
     },
+    addNotification(notification: INotification) {
+      this.notificationsMap[notification.id] = notification
+    },
+    clearNotifications() { 
+      this.notificationsMap = {}
+    },
+    
     deleteSession(id?: number) {
-      delete this.sessions[id as number];
+      delete this.sessions[id as number]
     }
   }
 })

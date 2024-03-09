@@ -6,7 +6,7 @@ const popupButton = ref<HTMLElement | null>(null);
 const popup = ref<HTMLElement | null>(null);
 
 const toggle = () => {
-  
+
   isPopupVisible.value = !isPopupVisible.value;
   if (isPopupVisible.value) {
     positionPopup();
@@ -40,7 +40,12 @@ const positionPopup = async () => {
 
 onMounted(() => {
   positionPopup()
-  document.body.addEventListener('click', close);
+  document.addEventListener('click', function (event) {
+    if (popup.value && !popup.value.contains(event.target as any)) {
+      close();
+      event.stopPropagation();
+    }
+  }, true);
   window.addEventListener('resize', positionPopup);
 });
 
@@ -55,7 +60,7 @@ onBeforeUnmount(() => {
     <button ref="popupButton" class="popup-button" @click="toggle">
       <slot name="trigger"></slot>
     </button>
-    <div ref="popup" class="popup" v-if="isPopupVisible">
+    <div @click.stop ref="popup" class="popup" v-if="isPopupVisible">
       <slot></slot>
     </div>
   </div>

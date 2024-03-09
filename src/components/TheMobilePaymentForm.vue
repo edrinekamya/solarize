@@ -43,7 +43,6 @@ function handleKeyDown(event: any) {
       </section>
     </section>
     <ThePaymentButton :is-valid="isValidMobileMoneyNumber" />
-    
   </form>
 </template>
 
@@ -59,8 +58,6 @@ span {
 }
 
 input {
-
-  padding-top: 5px;
   font-size: 16px;
   font-weight: bold;
   position: relative;

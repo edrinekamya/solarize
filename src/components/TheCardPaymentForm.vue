@@ -70,7 +70,7 @@ function validateCcExp(event: any) {
   <form @submit.prevent="
     store.processPayment('Card', isAmex ? 'AMEX' : isMasterCard ? 'MASTERCARD' : 'VISA')
     " class="flex gap column">
-    
+
     <section class="column gap-s">
       <p>Email</p>
       <input v-model="store.email" :class="{ invalid: store.email && !emailValid }" required type="email" />
@@ -98,7 +98,7 @@ function validateCcExp(event: any) {
       <input v-model="store.name" :class="{ invalid: store.name && !nameValid }" required autocomplete="cc-name"
         placeholder="Full name on card" type="text" />
     </section>
-    <section class="gap-s column">
+    <section class="gap-s column country">
       <p>Country or region</p>
       <select v-model="store.country" :class="{ invalid: store.country && !countryValid }" required>
         <option v-for="country in countryList" :key="country" :value="country">
@@ -111,10 +111,15 @@ function validateCcExp(event: any) {
 </template>
 
 <style scoped>
-
 select {
-  background: transparent;
+  background: var(--color-background);
+  color: var(--color-text);
 }
+
+option:not(:checked) {
+  color: white;
+}
+
 .half {
   min-width: 10px;
 }

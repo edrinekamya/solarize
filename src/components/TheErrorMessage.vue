@@ -6,9 +6,11 @@ defineProps<{errorMessage?: string}>()
 
 <template>
   <Transition name="slide-fade">
-    <div v-if="errorMessage" class="row gap error-message">
-      <TheIcon name="MdError" />
-      {{ errorMessage }}
+    <div class="container center" v-if="errorMessage">
+      <div class="row gap error-message">
+        <TheIcon name="MdError" />
+        {{ errorMessage }}
+      </div>
     </div>
   </Transition>
 </template>
@@ -28,18 +30,21 @@ defineProps<{errorMessage?: string}>()
   transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
 .error-message {
   padding: 8px;
   border: 1px solid #f44336;
   border-radius: 5px;
   color: #f44336;
   background-color: #ffebee;
-  display: flex;
   align-items: center;
   font-size: 14px;
   font-weight: bold;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  
 }
 </style>

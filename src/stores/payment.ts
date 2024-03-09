@@ -1,8 +1,7 @@
-import { useAuthStore } from '@/stores/auth'
 import { useMainStore } from '@/stores/main'
 import { useSlideStore } from '@/stores/session'
 import { generateId } from '@/util'
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const MTNIdentifiers = ['6', '7', '8']
 const AIRTELIdentifiers = ['0', '4', '5']
@@ -31,6 +30,12 @@ export const usePaymentStore = defineStore('payment', {
     isAIRTEL: (state) => AIRTELIdentifiers.includes(state.phoneNumber.charAt(0))
   },
   actions: {
+    sendError(error: string) {
+      this.error = error
+      setTimeout(() => {
+        this.error = ''
+      }, 2000)
+    },
     async processPayment(method: PaymentMethod, provider: PaymentProvider) {
       try {
         this.error = ''
@@ -53,7 +58,9 @@ export const usePaymentStore = defineStore('payment', {
         if (!isValid) {
           this.paymentStep = 'Form'
           this.isPaymentProgress = false
-          this.error = `${isMobile ? `${provider} failed to validate your phone number` : 'Your card could be invalid, expired or not active'}.`
+          this.sendError(
+            `${isMobile ? `${provider} failed to validate your phone number` : 'Your card could be invalid, expired or not active'}.`
+          )
           return
         }
 
@@ -66,7 +73,7 @@ export const usePaymentStore = defineStore('payment', {
         if (!isProcessed) {
           this.paymentStep = 'Form'
           this.isPaymentProgress = false
-          this.error = 'Insufficient funds to complete your payment.'
+          this.sendError('Insufficient funds to complete your payment.')
           return
         }
 
@@ -79,23 +86,23 @@ export const usePaymentStore = defineStore('payment', {
 
         // send a notification
 
-        // simulate sending important notification to agent 30s later
+        // simulate sending important notification to agent 10s later
         const store = useMainStore()
         setTimeout(() => {
           store.addNotification({
             id: generateId(),
             type: 'important',
-            recipient: useAuthStore().agent.id,
+            
             timestamp: new Date().toISOString(),
             content:
               'The previous session has been completed successfully. An installation of the equipment purchased has been scheduled for 25/04/2024. Please advise the customer accordingly'
           })
-        }, 30000)
+        }, 10000)
         setTimeout(() => {
           store.addNotification({
             id: generateId(),
             type: 'push', // Assuming type 'push' represents an unimportant message
-            recipient: useAuthStore().agent.id,
+            
             timestamp: new Date().toISOString(),
             content: 'Congratulations! You have gained some credits for the recent sale.'
           })
@@ -107,7 +114,7 @@ export const usePaymentStore = defineStore('payment', {
         this.isPaymentProgress = false
       } catch (error) {
         this.paymentStep = 'Form'
-        this.error = 'An unexpected error occurred during the payment process'
+        this.sendError('An unexpected error occurred during the payment process')
       } finally {
         this.isPaymentProgress = false
       }

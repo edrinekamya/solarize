@@ -8,6 +8,7 @@ import ThePayment from '@/components/ThePayment.vue';
 import ThePaymentMethod from '@/components/ThePaymentMethod.vue';
 import ThePaymentPlans from '@/components/ThePaymentPlans.vue';
 import TheThankYou from '@/components/TheThankYou.vue';
+import TheUserData from '@/components/TheUserData.vue';
 import { useSlideStore } from '@/stores/session';
 import { computed } from 'vue';
 
@@ -24,6 +25,7 @@ const slideCustomizations = computed(() => props.customizations[props.index] ?? 
     <h2 v-if="slide.type !== 'introduction' && slide.type !== 'visualization'"> {{ slide.title }}</h2>
     <TheIntroduction v-if="slide.type === 'introduction'" />
     <TheBasics v-else-if="slide.type === 'basics'" />
+    <TheUserData v-else-if="slide.type === 'form'" />
     <TheCustomization :customizations="slideCustomizations" :slide="index"
       v-else-if="slide.type === 'choice' || slide.type === 'customization'" />
     <TheConfirmation v-else-if="slide.type === 'confirmation'" />
@@ -43,10 +45,7 @@ const slideCustomizations = computed(() => props.customizations[props.index] ?? 
 }
 
 h2 {
-  position: sticky;
-  top: 12px;
   text-align: center;
   color: var(--color-text-1);
-  margin-bottom: 20px;
 }
 </style>

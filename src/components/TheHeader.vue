@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import TheIconButton from "@/components/TheIconButton.vue";
+import TheIcon from "@/components/TheIcon.vue";
 import TheLogo from "@/components/TheLogo.vue";
+import TheNotifications from "@/components/TheNotifications.vue";
 import ThePopup from "@/components/ThePopup.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useMainStore } from "@/stores/main";
 import { ref } from "vue";
-import TheIcon from "@/components/TheIcon.vue";
 
-const notifications = ref<INotification[]>([]);
-const notificationPopup = ref<any>(null);
 const userPopup = ref<any>(null);
 const auth = useAuthStore()
 const main = useMainStore()
@@ -26,23 +24,7 @@ const main = useMainStore()
       <input class="search-input" v-model="main.search" type="text" placeholder="Find sessions" />
     </section>
     <div class="row gap">
-
-      <div>
-        <span v-if="notifications.length > 0" class="notification-badge">{{ notifications.length }}</span>
-        <ThePopup ref="notificationPopup">
-          <template #trigger>
-            <TheIconButton name="md-notifications-outlined" @press="notificationPopup?.toggle()" />
-          </template>
-          <div class="notification-popup">
-            <h3 class="center">Notifications</h3>
-            <ul>
-              <li v-for="notification in main.notifications" :key="notification.id">
-                {{ notification.content }}
-              </li>
-            </ul>
-          </div>
-        </ThePopup>
-      </div>
+      <TheNotifications />
       <ThePopup ref="userPopup">
         <template #trigger>
           <div @click.stop="userPopup?.toggle()" class="center avatar">{{ auth.agent.name[0] }}</div>
@@ -123,8 +105,7 @@ input {
 }
 
 .user-popup {
-  min-width: 40vh;
-  /* height: 60vh; */
+  width: 40vh;
 }
 
 .avatar {
@@ -140,8 +121,6 @@ input {
   background: rgb(61, 3, 102);
 }
 
-.notification-popup {
-  min-width: 70vh;
-  height: 70vh;
-}
+
+
 </style>

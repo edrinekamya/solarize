@@ -8,6 +8,17 @@
   flex: 1;
 }
 
+.grid-content-heading {
+  text-align: center;
+  color: white;
+}
+
+.grid-center-content {
+  background: var(--color-background);
+  border-radius: 16px;
+  padding: 12px;
+}
+
 .overlay {
   position: absolute;
   left: 0;

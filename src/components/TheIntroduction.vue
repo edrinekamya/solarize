@@ -57,7 +57,7 @@ h1 {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   margin: 24px;
-  border-radius: 64px;
+  border-radius: 24px;
 }
 
 .mission-statement {

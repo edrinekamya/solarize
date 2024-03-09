@@ -20,10 +20,46 @@ export const solarizeCompany = {
   }
 }
 
+// List of potential notifications
+export const notifications = [
+  {
+    type: 'important',
+    content: (arg1?: string, arg2?: string) => `A new customer, ${arg1}, has requested a quote in session ${arg2}. Please follow up.`,
+    isDynamic: true,
+  },
+  {
+    type: 'push',
+    content: (arg1?: string) => `Your recent sale has earned you ${arg1} bonus points!`,
+    isDynamic: true
+  },
+  {
+    type: 'important',
+    content: () => 'A customer has reported an issue with their solar installation. Please address it urgently.',
+    isDynamic: false
+  },
+  {
+    type: 'push',
+    content: () => 'A new solar panel model is now available. Check it out!',
+    isDynamic: false
+  },
+  {
+    type: 'important',
+    content: () => 'A scheduled installation for a customer is due tomorrow. Please confirm the arrangements.',
+    isDynamic: false
+  },
+  {
+    type: 'push',
+    content: () => 'You have a new message in your inbox.',
+    isDynamic: false
+  },
+];
+
+
 export const solarReasons = [
   {
     title: 'Financial Savings',
-    description: 'One of the primary reasons people choose solar is for the economic benefits.',
+    description:
+      'Solar energy systems offer substantial financial benefits by reducing electricity bills, safeguarding against rising energy costs, and enhancing property value.',
     merits: [
       'Reduced or Eliminated Electric Bills',
       'Protection Against Rising Energy Costs',
@@ -32,7 +68,8 @@ export const solarReasons = [
   },
   {
     title: 'Environmental Impact',
-    description: 'Solar energy positively impacts the environment.',
+    description:
+      'Solar energy significantly reduces carbon emissions and local air pollution, contributing to a healthier environment and combating climate change.',
     merits: [
       'Reduced Carbon Emissions',
       'Local Air Pollution Reduction',
@@ -42,12 +79,14 @@ export const solarReasons = [
   },
   {
     title: 'Energy Independence',
-    description: 'Solar provides energy independence.',
+    description:
+      'Solar energy systems provide homeowners with greater energy independence, reducing reliance on the grid and offering resilience during power outages.',
     merits: ['Less Reliance on Grid', 'Resilience During Outages']
   },
   {
     title: 'Limitless Source',
-    description: 'Solar energy comes from the sun, which is nearly limitless.',
+    description:
+      "Harnessing the sun's energy provides a virtually limitless, abundant, and accessible power source with minimal land requirements.",
     merits: ['Abundant and Accessible', 'Minimal Land Requirement']
   }
 ]
@@ -68,21 +107,23 @@ export const slideShow: SlideShow = {
       0: {
         name: 'Commercial',
         description: 'Designed for businesses and commercial properties.',
-        pricing: 10000,
         pricingFrequency: 'one-time',
         image: '/src/assets/commercial.png'
       },
       1: {
         name: 'Residential',
         description: 'Tailored for homeowners and residential properties.',
-        pricing: 8000,
         pricingFrequency: 'one-time',
         image: '/src/assets/residential.png'
       }
     }
   },
   3: {
-    title: 'Choose Panel Types',
+    title: 'Specifications',
+    type: 'form'
+  },
+  4: {
+    title: 'Recommended Solar Panels',
     type: 'choice',
     customizations: {
       0: {
@@ -90,7 +131,8 @@ export const slideShow: SlideShow = {
         description: 'Standard solar panels providing good efficiency at an affordable cost.',
         pricing: 2000,
         pricingFrequency: 'one-time',
-        image: '/src/assets/poly.png'
+        image: '/src/assets/poly.png',
+        output: 250
       },
       1: {
         name: 'Monocrystalline',
@@ -98,149 +140,138 @@ export const slideShow: SlideShow = {
           'High-efficiency panels with sleek design, suitable for limited space installations.',
         pricing: 1500,
         pricingFrequency: 'one-time',
-        image: '/src/assets/mono.png'
+        image: '/src/assets/mono.png',
+        output: 300
       },
       2: {
         name: 'Thin Film',
         description: 'Flexible and lightweight panels suitable for curved or irregular surfaces.',
         pricing: 500,
         pricingFrequency: 'one-time',
-        image: '/src/assets/thin.png'
+        image: '/src/assets/thin.png',
+        output: 100
       }
-      // Add more panel types as needed
     }
   },
-  4: {
-    title: 'Customizations',
+  5: {
+    title: 'Add-ons',
     type: 'customization',
     customizations: {
       0: {
         name: 'Inverter Upgrade',
         description: 'Upgrade to a more efficient inverter for better energy conversion.',
         pricing: 500,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.2
       },
       1: {
         name: 'Battery Storage',
         description: 'Add battery storage for backup power during outages or off-grid use.',
         pricing: 2000,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.3
       },
       2: {
         name: 'Solar Tracker',
         description: 'Automated solar panel tracking system for maximizing energy generation.',
         pricing: 3000,
-        pricingFrequency: 'one-time'
-      },
-      3: {
-        name: 'Additional Panels',
-        description: 'Increase the number of solar panels for higher energy production.',
-        pricing: 1000,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.05
       },
       4: {
         name: 'Smart Home Integration',
         description: 'Connect solar system to smart home devices for energy optimization.',
         pricing: 800,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.3
       },
       5: {
         name: 'Off-grid Package',
         description: 'Complete off-grid solar solution with battery storage and backup generator.',
         pricing: 5000,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.5
       },
       6: {
-        name: 'Microinverters',
-        description: 'Install microinverters for individual panel optimization and monitoring.',
+        name: 'Micro-Inverters',
+        description: 'Install micro-inverters for individual panel optimization and monitoring.',
         pricing: 1200,
-        pricingFrequency: 'one-time'
-      },
-      7: {
-        name: 'Panel Cleaning Service',
-        description: 'Regular cleaning service to maintain optimal performance of solar panels.',
-        pricing: 50,
-        pricingFrequency: 'monthly'
-      }
-    }
-  },
-  5: {
-    title: 'Other Services',
-    type: 'customization',
-    customizations: {
-      0: {
-        name: 'Maintenance Plan',
-        description:
-          'Regular maintenance to ensure optimal performance and longevity of your solar system.',
-        pricing: 100,
-        pricingFrequency: 'monthly'
-      },
-      1: {
-        name: 'Monitoring System',
-        description: 'Real-time monitoring of your solar system performance for peace of mind.',
-        pricing: 50,
-        pricingFrequency: 'monthly'
-      },
-      2: {
-        name: 'Energy Audit',
-        description: 'Comprehensive analysis of your energy usage to optimize solar system design.',
-        pricing: 200,
-        pricingFrequency: 'one-time'
-      },
-      3: {
-        name: 'Installation',
-        description: 'Professional installation services by certified technicians.',
-        pricing: 1500,
-        pricingFrequency: 'one-time'
-      },
-      4: {
-        name: 'Extended Warranty',
-        description: 'Extend the warranty coverage of your solar system for added protection.',
-        pricing: 300,
-        pricingFrequency: 'annually'
-      },
-      5: {
-        name: 'Grid Connection',
-        description: 'Assistance with grid connection process and paperwork.',
-        pricing: 500,
-        pricingFrequency: 'one-time'
-      },
-      6: {
-        name: 'Remote Monitoring Subscription',
-        description:
-          'Access to advanced monitoring features and data analytics via remote subscription.',
-        pricing: 20,
-        pricingFrequency: 'monthly'
-      },
-      7: {
-        name: 'Energy Efficiency Consultation',
-        description: 'Expert consultation to improve energy efficiency and reduce consumption.',
-        pricing: 150,
-        pricingFrequency: 'one-time'
+        pricingFrequency: 'one-time',
+        savings: 0.3
       }
     }
   },
   6: {
-    title: '3D House Model',
-    type: 'visualization'
+    title: 'Additional Services',
+    type: 'customization',
+    customizations: {
+      0: {
+        name: 'Inverter Upgrade',
+        description: 'Upgrade to a more efficient inverter for better energy conversion.',
+        pricing: 500,
+        pricingFrequency: 'one-time',
+        savings: 0
+      },
+      1: {
+        name: 'Battery Storage',
+        description: 'Add battery storage for backup power during outages or off-grid use.',
+        pricing: 2000,
+        pricingFrequency: 'one-time',
+        savings: 0
+      },
+      2: {
+        name: 'Solar Tracker',
+        description: 'Automated solar panel tracking system for maximizing energy generation.',
+        pricing: 3000,
+        pricingFrequency: 'one-time',
+        savings: 0
+      },
+      4: {
+        name: 'Smart Home Integration',
+        description: 'Connect solar system to smart home devices for energy optimization.',
+        pricing: 800,
+        pricingFrequency: 'one-time',
+        savings: 0
+      },
+      5: {
+        name: 'Off-grid Package',
+        description: 'Complete off-grid solar solution with battery storage and backup generator.',
+        pricing: 5000,
+        pricingFrequency: 'one-time',
+        savings: 0
+      },
+      6: {
+        name: 'Micro-Inverters',
+        description: 'Install micro-inverters for individual panel optimization and monitoring.',
+        pricing: 1200,
+        pricingFrequency: 'one-time',
+        savings: 0
+      }
+    }
   },
   7: {
+    title: '3D Model',
+    type: 'visualization'
+  },
+
+  8: {
     title: 'So what do you think?',
     type: 'confirmation'
   },
-  8: {
+
+  9: {
     title: 'Choose a payment Plan',
     type: 'payment-plan'
   },
-  9: {
+  10: {
     title: 'Choose a payment method',
     type: 'payment-method'
   },
-  10: {
+  11: {
     title: 'Payment',
     type: 'payment'
   },
-  11: {
+  12: {
     title: 'Thank You',
     type: 'conclusion'
   }

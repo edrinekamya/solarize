@@ -11,6 +11,7 @@ const progress = computed(() => slideShow.session.progress + 1)
 const main = useMainStore()
 const slideNumber = computed(() => slideShow.session.slideNumber)
 const payment = usePaymentStore()
+const savings = computed(() => slideShow.savingsAndROI)
 
 watchEffect(() => {
   if (slideShow.session.progress > 2) {

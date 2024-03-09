@@ -9,6 +9,7 @@ declare global {
   type SlideType =
     | 'introduction'
     | 'basics'
+    | 'form'
     | 'payment-plan'
     | 'customization' // can choose one or not
     | 'confirmation'
@@ -23,6 +24,8 @@ declare global {
     name: string
     description: string
     pricing?: number
+    output?: number
+    savings?: number
     image?: string
     pricingFrequency?: 'one-time' | 'monthly' | 'quarterly' | 'annually'
     exclude?: number[] // excludes some customization from previous step
@@ -45,15 +48,16 @@ declare global {
   type PaymentStep = 'Form' | 'Securing' | 'Validating' | 'Processing' | 'Success'
   type PaymentProvider = 'MTN' | 'AIRTEL' | 'VISA' | 'MASTERCARD' | 'AMEX'
 
-  type SelectionMap = Record<number, number> // map of slide to all customization selected at that slide
   type Customizations = Record<number, number[]>
   type SlideShow = Record<number, Slide>
+  type NumberRecord = Record<number, number>
+
+  type Costs = Record<number, NumberRecord>
 
   type Popup = typeof ThePopup | null
 
   interface AgentAuthentication {
     agentId: string
-    biometricEnabled: boolean
   }
 
   interface ISlide {
@@ -66,9 +70,10 @@ declare global {
     name: string
   }
 
-  type ICost = Record<number, number>
-
-  type Costs = Record<number, ICost>
+  interface CustomizationSaving {
+    name: string
+    saving: number
+  }
 
   // Interface for user sessions
   interface UserSession {
@@ -76,11 +81,15 @@ declare global {
     slideNumber: number
     progress: number
     customer: string
-    paymentPlan: PaymentPlan
+    paymentPlan?: PaymentPlan
     cost: Costs
     status: SessionStatus
     id?: number
-    lastOpened:string
+    lastOpened: string
+    sunlightHours: number
+    electricityCost: number
+    solarSpace: number
+    savings: Record<number,ICustomization>
   }
 
   // Interface for individual slide content
@@ -90,31 +99,10 @@ declare global {
     customizationOptions: string[]
   }
 
-  // Interface for user progress within a session
-  interface SessionProgress {
-    currentSlideIndex: number
-    totalSlides: number
-    completionPercentage: number
-  }
-
-  // Interface for solar solution customization options
-  interface SolarCustomization {
-    [customizationCategory: string]: string[]
-  }
-
-  // Interface for solar solution data
-  interface SolarSolution {
-    solutionName: string
-    panelTypes: string[]
-    customizations: SolarCustomization
-    // Other solution-related data
-  }
-
   // Interface for notifications
   interface INotification {
     id: string
     type: 'email' | 'push' | 'in-app' | 'important'
-    recipient: string
     content: string
     timestamp: string
     read?: boolean

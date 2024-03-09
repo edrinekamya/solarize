@@ -1,15 +1,15 @@
 <script setup lang='ts'>
 import { useSlideStore } from '@/stores/session';
-
 const slideShow = useSlideStore()
-const currentSlide = slideShow.currentSlide;
-
 </script>
 
 <template>
   <div class="flex center column">
-    <h2>Thank you for choosing Solarize!</h2>
-    <button @click="slideShow.close">Close</button>
+    <div class="column grid-center-content gap content">
+      <h3 class=".grid-content-heading">Thank you for choosing Solarize!</h3>
+      <p>The agent will be sent instructions on how to proceed shortly</p>
+      <button @click="slideShow.close">Close</button>
+    </div>
   </div>
 </template>
 
