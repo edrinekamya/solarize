@@ -1,26 +1,25 @@
 <script setup lang="ts">
-import TheErrorMessage from "@/components/TheErrorMessage.vue";
-import TheIcon from "@/components/TheIcon.vue";
-import TheLogo from "@/components/TheLogo.vue";
-import { useAuthStore } from "@/stores/auth";
-import { watchEffect } from "vue";
-import { useRouter } from "vue-router";
+import TheErrorMessage from '@/components/TheErrorMessage.vue'
+import TheIcon from '@/components/TheIcon.vue'
+import TheLogo from '@/components/TheLogo.vue'
+import { useAuthStore } from '@/stores/auth'
+import { watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
-const auth = useAuthStore();
+const auth = useAuthStore()
 const router = useRouter()
 
 watchEffect(() => {
   // auto -hide error
   if (auth.errorMessage) {
     setTimeout(() => {
-      auth.errorMessage = '';
-    }, 2000);
+      auth.errorMessage = ''
+    }, 2000)
   }
   if (auth.agent.id) {
     router.replace('/')
   }
 })
-
 </script>
 
 <template>
@@ -29,15 +28,26 @@ watchEffect(() => {
       <TheLogo :size="125" />
       <h1 class="auth-title">Solarize</h1>
       <p class="auth-description">The ultimate app for solar energy management</p>
-      <input :disabled="auth.loading" v-model="auth.agentId" type="text" placeholder="Enter your agent ID"
-        class="auth-input" @keyup.enter="auth.login" />
-      <button type="submit" class="auth-button" @click="auth.login" :disabled="!auth.agentId || auth.loading">
+      <input
+        :disabled="auth.loading"
+        v-model="auth.agentId"
+        type="text"
+        placeholder="Enter your agent ID"
+        class="auth-input"
+        @keyup.enter="auth.login"
+      />
+      <button
+        type="submit"
+        class="auth-button"
+        @click="auth.login"
+        :disabled="!auth.agentId || auth.loading"
+      >
         <TheIcon v-if="auth.loading" name="FaSpinner" animation="spin" />Login
-
       </button>
       <TheErrorMessage :error-message="auth.errorMessage" />
       <p class="auth-helper">
-        If you have forgotten your agent ID, please contact the company. <a href="#" class="auth-link">Learn more</a>
+        If you have forgotten your agent ID, please contact the company.
+        <a href="#" class="auth-link">Learn more</a>
       </p>
     </div>
   </div>
@@ -50,7 +60,6 @@ watchEffect(() => {
   align-items: center;
   justify-content: center;
 }
-
 
 .auth-container {
   width: 400px;
@@ -98,7 +107,6 @@ watchEffect(() => {
   margin-bottom: 4px;
 }
 
-
 .auth-helper {
   font-size: 16px;
   text-align: center;
@@ -113,5 +121,4 @@ watchEffect(() => {
 .auth-link:hover {
   text-decoration: underline;
 }
-
 </style>

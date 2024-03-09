@@ -1,7 +1,7 @@
-<script setup lang='ts'>
-import TheIcon from '@/components/TheIcon.vue';
+<script setup lang="ts">
+import TheIcon from '@/components/TheIcon.vue'
 
-defineProps<{errorMessage?: string}>()
+defineProps<{ errorMessage?: string }>()
 </script>
 
 <template>
@@ -23,11 +23,11 @@ defineProps<{errorMessage?: string}>()
 }
 
 .slide-fade-enter-active {
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .container {
@@ -45,6 +45,5 @@ defineProps<{errorMessage?: string}>()
   align-items: center;
   font-size: 14px;
   font-weight: bold;
-  
 }
 </style>

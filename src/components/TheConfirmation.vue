@@ -1,6 +1,6 @@
-<script setup lang='ts'>
-import { useSlideStore } from '@/stores/session';
-import { computed } from 'vue';
+<script setup lang="ts">
+import { useSlideStore } from '@/stores/session'
+import { computed } from 'vue'
 
 const slides = useSlideStore()
 const savings = computed(() => slides.savingsAndROI)
@@ -33,7 +33,6 @@ const savings = computed(() => slides.savingsAndROI)
       <button @click="slides.nextSlide" class="yes">Yes, I'm In</button>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -62,6 +61,6 @@ h4 {
 
 .later {
   background: var(--color-background-mute);
-  color: var(--color-text-1)
+  color: var(--color-text-1);
 }
 </style>

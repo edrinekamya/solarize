@@ -1,5 +1,5 @@
-<script setup lang='ts'>
-import { useSlideStore } from '@/stores/session';
+<script setup lang="ts">
+import { useSlideStore } from '@/stores/session'
 const slideShow = useSlideStore()
 </script>
 

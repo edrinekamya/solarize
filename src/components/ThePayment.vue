@@ -1,12 +1,10 @@
-<script setup lang='ts'>
-import TheCardPaymentForm from '@/components/TheCardPaymentForm.vue';
-import TheErrorMessage from '@/components/TheErrorMessage.vue';
-import TheMobilePaymentForm from '@/components/TheMobilePaymentForm.vue';
-import { usePaymentStore } from '@/stores/payment';
+<script setup lang="ts">
+import TheCardPaymentForm from '@/components/TheCardPaymentForm.vue'
+import TheErrorMessage from '@/components/TheErrorMessage.vue'
+import TheMobilePaymentForm from '@/components/TheMobilePaymentForm.vue'
+import { usePaymentStore } from '@/stores/payment'
 
 const payment = usePaymentStore()
-
-
 </script>
 
 <template>

@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import { solarReasons } from "@/data";
-import { computed, ref } from "vue";
+import { solarReasons } from '@/data'
+import { computed, ref } from 'vue'
 
 const currentIndex = ref<any>(null)
 
-const selectedReason = computed(() => currentIndex.value != null ? solarReasons[currentIndex.value] : null)
+const selectedReason = computed(() =>
+  currentIndex.value != null ? solarReasons[currentIndex.value] : null
+)
 
 function changeDescription(index: number) {
   currentIndex.value = currentIndex.value == index ? null : index
 }
-
 </script>
 
 <template>
   <div class="container gap column">
     <div class="grid-container">
-      <div @click="changeDescription(index)" :class="{ selected: currentIndex == index }" class="grid-item column"
-        v-for="(section, index) in solarReasons" :key="index">
+      <div
+        @click="changeDescription(index)"
+        :class="{ selected: currentIndex == index }"
+        class="grid-item column"
+        v-for="(section, index) in solarReasons"
+        :key="index"
+      >
         <h2>{{ section.title }}</h2>
         <section class="row">
           <p>{{ section.description }}</p>
@@ -48,14 +54,12 @@ function changeDescription(index: number) {
   height: auto;
 }
 
-
-
 .reasons {
   background: var(--color-background-soft);
   padding: 16px;
   display: flex;
   position: absolute;
-  border-radius: 12px
+  border-radius: 12px;
 }
 
 li {

@@ -92,7 +92,7 @@ export const usePaymentStore = defineStore('payment', {
           store.addNotification({
             id: generateId(),
             type: 'important',
-            
+
             timestamp: new Date().toISOString(),
             content:
               'The previous session has been completed successfully. An installation of the equipment purchased has been scheduled for 25/04/2024. Please advise the customer accordingly'
@@ -102,7 +102,7 @@ export const usePaymentStore = defineStore('payment', {
           store.addNotification({
             id: generateId(),
             type: 'push', // Assuming type 'push' represents an unimportant message
-            
+
             timestamp: new Date().toISOString(),
             content: 'Congratulations! You have gained some credits for the recent sale.'
           })

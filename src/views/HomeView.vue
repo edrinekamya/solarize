@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import TheHeader from '@/components/TheHeader.vue';
-import TheMainContent from '@/components/TheMainContent.vue';
+import TheHeader from '@/components/TheHeader.vue'
+import TheMainContent from '@/components/TheMainContent.vue'
 
-import router from '@/router';
-import { useAuthStore } from '@/stores/auth';
-import { watchEffect } from 'vue';
-const auth = useAuthStore();
+import router from '@/router'
+import { useAuthStore } from '@/stores/auth'
+import { watchEffect } from 'vue'
+const auth = useAuthStore()
 
 watchEffect(() => {
   if (!auth.agent.id) {
     router.replace('/login')
   }
 })
-
 </script>
 
 <template>
@@ -21,4 +20,3 @@ watchEffect(() => {
     <TheMainContent />
   </main>
 </template>
-

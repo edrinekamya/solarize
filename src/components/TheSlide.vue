@@ -1,19 +1,21 @@
-<script setup lang='ts'>
-import TheSlideContent from '@/components/TheSlideContent.vue';
-import { useSlideStore } from '@/stores/session';
-import { useWindowSize } from '@vueuse/core';
-import { computed } from 'vue';
+<script setup lang="ts">
+import TheSlideContent from '@/components/TheSlideContent.vue'
+import { useSlideStore } from '@/stores/session'
+import { useWindowSize } from '@vueuse/core'
+import { computed } from 'vue'
 
 const props = defineProps<{ index: number }>()
 const slideShow = useSlideStore()
 const { width: windowWidth } = useWindowSize()
 // const slideWidth = computed(() => windowWidth.value / (windowWidth.value > 1024 ? 3 : windowWidth.value > 768 ? 2 : 1))
 const translateX = computed(() => (props.index - slideShow.session.slideNumber) * windowWidth.value)
-
 </script>
 
 <template>
-  <div :style="{ transform: `translateX(${translateX}px)`, width: `${windowWidth}px` }" class="slide column flex">
+  <div
+    :style="{ transform: `translateX(${translateX}px)`, width: `${windowWidth}px` }"
+    class="slide column flex"
+  >
     <TheSlideContent :customizations="slideShow.session.customizations" :index="index" />
   </div>
 </template>

@@ -89,7 +89,7 @@ declare global {
     sunlightHours: number
     electricityCost: number
     solarSpace: number
-    savings: Record<number,ICustomization>
+    savings: Record<number, ICustomization>
   }
 
   // Interface for individual slide content

@@ -1,8 +1,5 @@
-<script setup lang='ts'>
-
-defineProps<{useCase: number}>()
-
-
+<script setup lang="ts">
+defineProps<{ useCase: number }>()
 </script>
 
 <template>

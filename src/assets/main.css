@@ -52,7 +52,6 @@
   height: 24px;
 }
 
-
 button {
   height: 32px;
   border: none;
@@ -133,7 +132,6 @@ input:focus {
   gap: 4px;
 }
 
-
 .center {
   display: flex;
   justify-content: center;
@@ -198,13 +196,16 @@ input:focus {
   position: absolute;
 }
 
-.slide-enter-active, .slide-leave-active {
-  transition: transform .5s;
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s;
 }
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
   transform: translateX(100%);
 }
-.slide-leave, .slide-enter-to {
+.slide-leave,
+.slide-enter-to {
   transform: translateX(0);
 }
 

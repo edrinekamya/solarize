@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import TheIcon from "@/components/TheIcon.vue";
-import TheLogo from "@/components/TheLogo.vue";
-import TheNotifications from "@/components/TheNotifications.vue";
-import ThePopup from "@/components/ThePopup.vue";
-import { useAuthStore } from "@/stores/auth";
-import { useMainStore } from "@/stores/main";
-import { ref } from "vue";
+import TheIcon from '@/components/TheIcon.vue'
+import TheLogo from '@/components/TheLogo.vue'
+import TheNotifications from '@/components/TheNotifications.vue'
+import ThePopup from '@/components/ThePopup.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useMainStore } from '@/stores/main'
+import { ref } from 'vue'
 
-const userPopup = ref<any>(null);
+const userPopup = ref<any>(null)
 const auth = useAuthStore()
 const main = useMainStore()
-
 </script>
 
 <template scoped>
@@ -27,7 +26,9 @@ const main = useMainStore()
       <TheNotifications />
       <ThePopup ref="userPopup">
         <template #trigger>
-          <div @click.stop="userPopup?.toggle()" class="center avatar">{{ auth.agent.name[0] }}</div>
+          <div @click.stop="userPopup?.toggle()" class="center avatar">
+            {{ auth.agent.name[0] }}
+          </div>
         </template>
         <div class="column user-popup">
           <div class="center column top">
@@ -68,16 +69,16 @@ const main = useMainStore()
   font-weight: bold;
 }
 
-.user-popup>.top {
+.user-popup > .top {
   align-self: center;
   padding: 16px;
 }
 
-.user-popup>.bottom {
+.user-popup > .bottom {
   padding: 10px 0px;
 }
 
-.top>p {
+.top > p {
   color: var(--color-text-1);
   font-weight: bold;
 }
@@ -91,7 +92,7 @@ const main = useMainStore()
   border: 2px solid indigo;
 }
 
-.search-bar:hover>.icon {
+.search-bar:hover > .icon {
   color: indigo;
 }
 
@@ -120,7 +121,4 @@ input {
 .avatar:hover {
   background: rgb(61, 3, 102);
 }
-
-
-
 </style>

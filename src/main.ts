@@ -190,4 +190,3 @@ app.mount('#app')
  * - Feedback: string (feedback provided by user or agent)
  * - Attachments: array of strings (file paths or URLs of attachments)
  */
-

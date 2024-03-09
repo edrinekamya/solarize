@@ -1,6 +1,6 @@
-<script setup lang='ts'>
-import TheIcon from '@/components/TheIcon.vue';
-import { usePaymentStore } from '@/stores/payment';
+<script setup lang="ts">
+import TheIcon from '@/components/TheIcon.vue'
+import { usePaymentStore } from '@/stores/payment'
 
 const store = usePaymentStore()
 defineProps<{ isValid: boolean }>()

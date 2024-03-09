@@ -11,12 +11,12 @@ export const useMainStore = defineStore('main', {
     notificationsMap: useLocalStorage('solarize/notifications', {} as Record<string, INotification>)
   }),
   getters: {
-    notifications: (state) => Object.values(state.notificationsMap),
+    notifications: (state) => Object.values(state.notificationsMap).reverse(),
     hasUnreadImportant(): INotification[] {
       return this.unread.filter((x) => x.type === 'important' && !x.read)
     },
     unread(): INotification[] {
-      return this.notifications.filter(x => !x.read)
+      return this.notifications.filter((x) => !x.read)
     },
     allSessions: (state) => Object.values(state.sessions),
     filteredSessions(state): UserSession[] {
@@ -41,10 +41,10 @@ export const useMainStore = defineStore('main', {
     addNotification(notification: INotification) {
       this.notificationsMap[notification.id] = notification
     },
-    clearNotifications() { 
+    clearNotifications() {
       this.notificationsMap = {}
     },
-    
+
     deleteSession(id?: number) {
       delete this.sessions[id as number]
     }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ThePaymentButton from '@/components/ThePaymentButton.vue';
-import { usePaymentStore } from '@/stores/payment';
+import ThePaymentButton from '@/components/ThePaymentButton.vue'
+import { usePaymentStore } from '@/stores/payment'
 import { validateNumeric } from '@/util'
 import { computed } from 'vue'
 
@@ -27,15 +27,27 @@ function handleKeyDown(event: any) {
 </script>
 
 <template>
-  <form @submit.prevent="store.processPayment('Mobile', isAIRTEL ? 'AIRTEL' : 'MTN')" class="column flex gap">
+  <form
+    @submit.prevent="store.processPayment('Mobile', isAIRTEL ? 'AIRTEL' : 'MTN')"
+    class="column flex gap"
+  >
     <section class="gap-s column">
       <p>Phone number</p>
-      <section :class="{
+      <section
+        :class="{
           invalid: formattedNumber && !isValidMobileMoneyNumber
-        }" class="row number">
+        }"
+        class="row number"
+      >
         <span class="ellipsis">+256 7</span>
-        <input @keydown="handleKeyDown" class="flex phone" id="mobileMoneyNumber" v-model="formattedNumber"
-          placeholder="xxx xxxxxx" maxlength="9" />
+        <input
+          @keydown="handleKeyDown"
+          class="flex phone"
+          id="mobileMoneyNumber"
+          v-model="formattedNumber"
+          placeholder="xxx xxxxxx"
+          maxlength="9"
+        />
         <section class="row gap-s">
           <img v-if="isAIRTEL" class="logo" src="../assets/logo/airtel-logo.png" alt="" />
           <img v-if="isMTN" class="logo" src="../assets/logo/mtn-logo.png" alt="" />
@@ -54,7 +66,7 @@ function handleKeyDown(event: any) {
 
 span {
   font-size: 16px;
-  font-weight: bold
+  font-weight: bold;
 }
 
 input {

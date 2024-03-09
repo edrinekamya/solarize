@@ -1,13 +1,11 @@
 <script setup lang="ts">
-
-import { camelToKebab } from '@/util';
+import { camelToKebab } from '@/util'
 defineProps<{
   name: string
   scale?: number
 }>()
 
-const emit = defineEmits(['press']);
-
+const emit = defineEmits(['press'])
 </script>
 
 <template>

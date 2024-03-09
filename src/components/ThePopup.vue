@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
-const isPopupVisible = ref(false);
-const popupButton = ref<HTMLElement | null>(null);
-const popup = ref<HTMLElement | null>(null);
+const isPopupVisible = ref(false)
+const popupButton = ref<HTMLElement | null>(null)
+const popup = ref<HTMLElement | null>(null)
+const emit = defineEmits(['close'])
 
 const toggle = () => {
-
-  isPopupVisible.value = !isPopupVisible.value;
+  isPopupVisible.value = !isPopupVisible.value
   if (isPopupVisible.value) {
-    positionPopup();
+    positionPopup()
+  } else {
+    emit('close')
   }
-};
+}
 
 function close() {
   isPopupVisible.value = false
+  emit('close')
 }
 
 defineExpose({
@@ -24,35 +27,39 @@ defineExpose({
 const positionPopup = async () => {
   await nextTick()
   if (!popupButton.value || !popup.value) return
-  const triggerRect = popupButton.value.getBoundingClientRect();
-  const popupRect = popup.value.getBoundingClientRect();
+  const triggerRect = popupButton.value.getBoundingClientRect()
+  const popupRect = popup.value.getBoundingClientRect()
   if (triggerRect.left + popupRect.width > window.innerWidth) {
-    popup.value.style.left = (triggerRect.left - popupRect.width + triggerRect.width) + 'px';
+    popup.value.style.left = triggerRect.left - popupRect.width + triggerRect.width + 'px'
   } else {
-    popup.value.style.left = triggerRect.left + 'px';
+    popup.value.style.left = triggerRect.left + 'px'
   }
   if (triggerRect.top + popupRect.height > window.innerHeight) {
-    popup.value.style.top = (triggerRect.top - popupRect.height) + 'px';
+    popup.value.style.top = triggerRect.top - popupRect.height + 'px'
   } else {
-    popup.value.style.top = triggerRect.bottom + 'px';
+    popup.value.style.top = triggerRect.bottom + 'px'
   }
-};
+}
 
 onMounted(() => {
   positionPopup()
-  document.addEventListener('click', function (event) {
-    if (popup.value && !popup.value.contains(event.target as any)) {
-      close();
-      event.stopPropagation();
-    }
-  }, true);
-  window.addEventListener('resize', positionPopup);
-});
+  document.addEventListener(
+    'click',
+    function (event) {
+      if (popup.value && !popup.value.contains(event.target as any)) {
+        close()
+        event.stopPropagation()
+      }
+    },
+    true
+  )
+  window.addEventListener('resize', positionPopup)
+})
 
 onBeforeUnmount(() => {
-  document.body.removeEventListener('click', close);
-  window.removeEventListener('resize', positionPopup);
-});
+  document.body.removeEventListener('click', close)
+  window.removeEventListener('resize', positionPopup)
+})
 </script>
 
 <template>

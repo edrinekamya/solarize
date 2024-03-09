@@ -41,12 +41,16 @@ export const useSlideStore = defineStore('session', {
 
       const values = Object.values(state.session.savings)
 
-      const totalCost = values
-        .map((x) => (x.savings == undefined ? x.pricing ?? 0 : 0))
-        .reduce((a, b) => a + b)
-      const addOnCost = values.map((x) => (x.savings ? x.pricing ?? 0 : 0)).reduce((a, b) => a + b)
+      const totalCost = values.length
+        ? values.map((x) => (x.savings == undefined ? x.pricing ?? 0 : 0)).reduce((a, b) => a + b)
+        : 0
+      const addOnCost = values.length
+        ? values.map((x) => (x.savings ? x.pricing ?? 0 : 0)).reduce((a, b) => a + b)
+        : 0
 
-      const addOnSavings = values.map((x) => x.savings ?? 0).reduce((a, b) => a + b)
+      const addOnSavings = values.length
+        ? values.map((x) => x.savings ?? 0).reduce((a, b) => a + b)
+        : 0
 
       // Calculate new savings with add-ons
       const newSavings = baseSavings + addOnSavings * electricalCost

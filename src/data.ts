@@ -24,8 +24,9 @@ export const solarizeCompany = {
 export const notifications = [
   {
     type: 'important',
-    content: (arg1?: string, arg2?: string) => `A new customer, ${arg1}, has requested a quote in session ${arg2}. Please follow up.`,
-    isDynamic: true,
+    content: (arg1?: string, arg2?: string) =>
+      `A new customer, ${arg1}, has requested a quote in session ${arg2}. Please follow up.`,
+    isDynamic: true
   },
   {
     type: 'push',
@@ -34,7 +35,8 @@ export const notifications = [
   },
   {
     type: 'important',
-    content: () => 'A customer has reported an issue with their solar installation. Please address it urgently.',
+    content: () =>
+      'A customer has reported an issue with their solar installation. Please address it urgently.',
     isDynamic: false
   },
   {
@@ -44,16 +46,16 @@ export const notifications = [
   },
   {
     type: 'important',
-    content: () => 'A scheduled installation for a customer is due tomorrow. Please confirm the arrangements.',
+    content: () =>
+      'A scheduled installation for a customer is due tomorrow. Please confirm the arrangements.',
     isDynamic: false
   },
   {
     type: 'push',
     content: () => 'You have a new message in your inbox.',
     isDynamic: false
-  },
-];
-
+  }
+]
 
 export const solarReasons = [
   {

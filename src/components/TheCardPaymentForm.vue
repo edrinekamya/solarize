@@ -67,36 +67,77 @@ function validateCcExp(event: any) {
 </script>
 
 <template>
-  <form @submit.prevent="
-    store.processPayment('Card', isAmex ? 'AMEX' : isMasterCard ? 'MASTERCARD' : 'VISA')
-    " class="flex gap column">
-
+  <form
+    @submit.prevent="
+      store.processPayment('Card', isAmex ? 'AMEX' : isMasterCard ? 'MASTERCARD' : 'VISA')
+    "
+    class="flex gap column"
+  >
     <section class="column gap-s">
       <p>Email</p>
-      <input v-model="store.email" :class="{ invalid: store.email && !emailValid }" required type="email" />
+      <input
+        v-model="store.email"
+        :class="{ invalid: store.email && !emailValid }"
+        required
+        type="email"
+      />
     </section>
     <section class="gap-s column">
       <p>Card information</p>
-      <section class="card-container gap-s row" :class="{ invalid: !isCardEmpty && !isCardFormatValid }">
-        <input @keydown="validateNumeric" :maxlength="19" v-model="formattedCardNumber" class="card-number flex"
-          required autocomplete="cc-number" placeholder="1234 1234 1234 1234" type="text" />
+      <section
+        class="card-container gap-s row"
+        :class="{ invalid: !isCardEmpty && !isCardFormatValid }"
+      >
+        <input
+          @keydown="validateNumeric"
+          :maxlength="19"
+          v-model="formattedCardNumber"
+          class="card-number flex"
+          required
+          autocomplete="cc-number"
+          placeholder="1234 1234 1234 1234"
+          type="text"
+        />
         <img v-if="isMasterCard" class="logo" src="/src/assets/logo/card.png" alt="" />
         <img v-if="isVisa" class="logo" src="/src/assets/logo/visa.png" alt="" />
         <img v-if="isAmex" class="logo" src="/src/assets/logo/american-express.png" alt="" />
       </section>
       <span class="danger" v-if="!isCardEmpty && !isCardFormatValid">Invalid card number</span>
       <section class="flex cc-row row gap-s">
-        <input class="half" @keydown="validateCcExp" maxlength="7" v-model="formattedCcExp"
-          :class="{ invalid: formattedCcExp && !ccExpValid }" required autocomplete="cc-exp" placeholder="MM / YY"
-          type="text" />
-        <input class="half" maxlength="3" @keydown="validateNumeric" v-model="store.cvc"
-          :class="{ invalid: store.cvc && !cvcValid }" required autocomplete="cc-csc" placeholder="CVC" type="text" />
+        <input
+          class="half"
+          @keydown="validateCcExp"
+          maxlength="7"
+          v-model="formattedCcExp"
+          :class="{ invalid: formattedCcExp && !ccExpValid }"
+          required
+          autocomplete="cc-exp"
+          placeholder="MM / YY"
+          type="text"
+        />
+        <input
+          class="half"
+          maxlength="3"
+          @keydown="validateNumeric"
+          v-model="store.cvc"
+          :class="{ invalid: store.cvc && !cvcValid }"
+          required
+          autocomplete="cc-csc"
+          placeholder="CVC"
+          type="text"
+        />
       </section>
     </section>
     <section class="gap-s column">
       <p>Cardholder name</p>
-      <input v-model="store.name" :class="{ invalid: store.name && !nameValid }" required autocomplete="cc-name"
-        placeholder="Full name on card" type="text" />
+      <input
+        v-model="store.name"
+        :class="{ invalid: store.name && !nameValid }"
+        required
+        autocomplete="cc-name"
+        placeholder="Full name on card"
+        type="text"
+      />
     </section>
     <section class="gap-s column country">
       <p>Country or region</p>
@@ -153,7 +194,7 @@ input {
   color: red;
 }
 
-.invalid>input {
+.invalid > input {
   color: red;
 }
 </style>

@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
         } else {
           this.errorMessage = "Sorry you're not James Bond"
         }
-        this.loading = false;
+        this.loading = false
       }, 1000)
     },
 

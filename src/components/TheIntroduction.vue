@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import TheLogo from '@/components/TheLogo.vue';
-import { solarizeCompany } from '@/data';
+import TheLogo from '@/components/TheLogo.vue'
+import { solarizeCompany } from '@/data'
 
 const address = solarizeCompany['address']
 const social = solarizeCompany['socialMedia']
-
 </script>
 
 <template>
@@ -15,7 +14,9 @@ const social = solarizeCompany['socialMedia']
     <div class="company-details">
       <h2>Achievements</h2>
       <ul>
-        <li v-for="achievement in solarizeCompany['achievements']" :key="achievement">{{ achievement }}</li>
+        <li v-for="achievement in solarizeCompany['achievements']" :key="achievement">
+          {{ achievement }}
+        </li>
       </ul>
     </div>
     <section class="row socials gap center">
@@ -27,9 +28,12 @@ const social = solarizeCompany['socialMedia']
     </section>
     <div class="address">
       <section class="row gap">
-        <span>{{ address['country'] }}</span>|<span>{{ address['city'] }}</span>
+        <span>{{ address['country'] }}</span
+        >|<span>{{ address['city'] }}</span>
       </section>
-      <span><i>{{ address['street'] }}</i></span>
+      <span
+        ><i>{{ address['street'] }}</i></span
+      >
     </div>
   </div>
 </template>

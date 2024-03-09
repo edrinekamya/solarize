@@ -41,48 +41,47 @@
 
 /* semantic color variables for this project */
 :root {
-
   --section-gap: 160px;
-   --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-    --color-background-slate: var(--vt-c-black-slate);
-    --color-background-cream: var(--vt-c-black-cream);
-    --color-background-pale: var(--vt-c-black-pale);
-    --color-background-ivory: var(--vt-c-black-ivory);
+  --color-background: var(--vt-c-black);
+  --color-background-soft: var(--vt-c-black-soft);
+  --color-background-mute: var(--vt-c-black-mute);
+  --color-background-slate: var(--vt-c-black-slate);
+  --color-background-cream: var(--vt-c-black-cream);
+  --color-background-pale: var(--vt-c-black-pale);
+  --color-background-ivory: var(--vt-c-black-ivory);
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-    --color-heading: var(--vt-c-text-dark-1);
+  --color-border: var(--vt-c-divider-dark-2);
+  --color-border-hover: var(--vt-c-divider-dark-1);
+  --color-heading: var(--vt-c-text-dark-1);
 
-    --color-text: var(--vt-c-text-dark-2);
-    --color-text-1: var(--vt-c-white);
-    --color-text-2: rgba(235, 235, 235, 0.64);
-    --color-text-3: #f8f8f8;
-    --color-text-4: rgba(200, 200, 200, 0.8);
-    --color-text-5: #cccccc;
+  --color-text: var(--vt-c-text-dark-2);
+  --color-text-1: var(--vt-c-white);
+  --color-text-2: rgba(235, 235, 235, 0.64);
+  --color-text-3: #f8f8f8;
+  --color-text-4: rgba(200, 200, 200, 0.8);
+  --color-text-5: #cccccc;
 }
 
 @media (prefers-color-scheme: d-dark) {
   :root {
-   --color-text: var(--vt-c-text-light-1);
-  --color-text-1: var(--vt-c-indigo);
-  --color-text-2: rgba(60, 60, 60, 0.66);
-  --color-text-3: #2c3e50;
-  --color-text-4: rgba(40, 40, 40, 0.8);
-  --color-text-5: #757575;
+    --color-text: var(--vt-c-text-light-1);
+    --color-text-1: var(--vt-c-indigo);
+    --color-text-2: rgba(60, 60, 60, 0.66);
+    --color-text-3: #2c3e50;
+    --color-text-4: rgba(40, 40, 40, 0.8);
+    --color-text-5: #757575;
 
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-  --color-background-slate: var(--vt-c-white-slate);
-  --color-background-cream: var(--vt-c-white-cream);
-  --color-background-pale: var(--vt-c-white-pale);
-  --color-background-ivory: var(--vt-c-white-ivory);
+    --color-background: var(--vt-c-white);
+    --color-background-soft: var(--vt-c-white-soft);
+    --color-background-mute: var(--vt-c-white-mute);
+    --color-background-slate: var(--vt-c-white-slate);
+    --color-background-cream: var(--vt-c-white-cream);
+    --color-background-pale: var(--vt-c-white-pale);
+    --color-background-ivory: var(--vt-c-white-ivory);
 
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-  --color-heading: var(--vt-c-text-light-1);
+    --color-border: var(--vt-c-divider-light-2);
+    --color-border-hover: var(--vt-c-divider-light-1);
+    --color-heading: var(--vt-c-text-light-1);
   }
 }
 
@@ -92,6 +91,17 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text);
+  border-radius: 10px;
 }
 
 body {

@@ -2,7 +2,7 @@
 const props = defineProps<{
   size?: number
 }>()
-const size = props.size ?? 24;
+const size = props.size ?? 24
 </script>
 
 <template>
